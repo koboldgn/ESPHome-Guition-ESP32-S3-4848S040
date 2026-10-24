@@ -32,3 +32,11 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.log
+
+
+configuration.yaml
+esphome/configuration.yaml
+main.yaml
+esphome/main.yaml
+
+
