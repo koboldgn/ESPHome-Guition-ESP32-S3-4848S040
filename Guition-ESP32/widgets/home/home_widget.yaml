@@ -81,7 +81,7 @@ sensor:
             text: !lambda |-
               static char buf[10];
               float t = id(weather_temp).state;
-              if (id(temp_unit) == 1) t = (t - 32.0f) * 5.0f / 9.0f;
+              if (id(temp_unit) != 1) t = t * 9.0f / 5.0f + 32.0f;
               snprintf(buf, sizeof(buf), "%.0f°", t);
               return buf;
 
