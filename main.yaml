@@ -1,310 +1,387 @@
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  GUITION ESP32-S3-4848S040  ·  Smart Home Display                           ║
-# ║                                                                              ║
-# ║  ► This is the ONLY file you need to edit.                                   ║
-# ║    Copy / rename it to support multiple unique devices.                      ║
-# ║                                                                              ║
-# ║  Everything below the substitutions block is the widget engine — leave it    ║
-# ║  unchanged unless you know what you are doing.                               ║
+
+# ║  GUITION ESP32-S3-4848S040  ·  Smart Home Display                            ║
+
 # ╚══════════════════════════════════════════════════════════════════════════════╝
+
 
 
 substitutions:
+
   # ── 1 │ DEVICE ───────────────────────────────────────────────────────────────
-  # esphome_name : lowercase letters, numbers and hyphens only (used as hostname)
-  # ota_password : OTA password for this device. Defaults to the shared
-  #                display_ota secret; point it at a device-specific secret if you
-  #                want each display to have its own.
-  # ha_server    : full URL to your Home Assistant instance
-  # time_zone    : IANA timezone name — https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  #                Examples: America/New_York  America/Chicago  America/Denver  America/Los_Angeles
-  #                          Europe/London  Europe/Paris  Asia/Tokyo  Australia/Sydney
-  #
-  esphome_name:          "yourdisplayname"
-  esphome_friendly_name: "Your Display Name"
+
+  esphome_name:          "futes-panel"
+
+  esphome_friendly_name: "Fűtés Panel"
+
   ota_password:          !secret display_ota
-  ha_server:             "http://homeassistant.local:8123"
-  time_zone:             "America/New_York"
+
+  ha_server:             "http://192.168.0.22:8123"
+
+  time_zone:             "Europe/Budapest"
+
 
 
   # ── 2 │ CORE ENTITIES ────────────────────────────────────────────────────────
-  # Notification banner — set this to an input_text entity in HA.
-  # Write any text to it and a banner will appear on the display for 10 seconds.
-  # Clear the entity (empty string) to dismiss early.
+
   notification_entity: "input_text.display_notification"
 
-  weather_entity:      "weather.forecast"               # outdoor weather + forecast
-  temperature_entity:  "sensor.yourinternaltemperature" # indoor temperature sensor
-  vacuum_entity:       "vacuum.yourvacuum"              # robot vacuum entity
-  media_player_entity: "media_player.yourmediaplayer"   # Spotify / music player
-  alarm_panel_entity:  "alarm_control_panel.system"     # security / alarm panel
-  pin_code:            !secret security_pin_code         # alarm PIN  (set in secrets.yaml)
+
+
+  weather_entity:      "weather.forecast_otthon"
+
+  temperature_entity:  "weather.forecast_otthon"
+
+  vacuum_entity:       "sensor.disabled"
+
+  media_player_entity: "sensor.disabled"
+
+  alarm_panel_entity:  "sensor.disabled"
+
+  pin_code:            !secret security_pin_code
+
 
 
   # ── 3 │ PERSON / PRESENCE  (up to 4 slots) ───────────────────────────────────
-  #  Shows initials in the top indicators bar — green when home, dim when away.
-  #  Unused slots → set person_entity_N: "sensor.disabled"
-  #
-  person_entity_1: "person.yourname"
-  person_initials_1: "A"
+
+  person_entity_1: "sensor.disabled"
+
+  person_initials_1: ""
+
+
 
   person_entity_2: "sensor.disabled"
+
   person_initials_2: ""
 
+
+
   person_entity_3: "sensor.disabled"
+
   person_initials_3: ""
 
+
+
   person_entity_4: "sensor.disabled"
+
   person_initials_4: ""
 
 
+
   # ── 4 │ SCENE SHORTCUTS  (up to 6 slots) ─────────────────────────────────────
-  #  scene_type_N : scene | script | automation
-  #  scene_icon_N : movie_clapper | play_circle | ceiling_lamp | ceiling_lamp_variant
-  #                 night_lamp | lightbulb | spotlights_group | desk_lamp | pendant_lamp
-  #                 music | curtains | garage | blinds | ceiling_fan | floor_fan
-  #                 bed | heart | tv
-  #  Unused slots → set scene_entity_N: "sensor.disabled"
-  #
-  scene_entity_1:  "scene.morning"
-  scene_label_1:   "Morning"
+
+  scene_entity_1:  "sensor.disabled"
+
+  scene_label_1:   ""
+
   scene_type_1:    "scene"
+
   scene_icon_1:    "movie_clapper"
 
-  scene_entity_2:  "scene.evening"
-  scene_label_2:   "Evening"
+
+
+  scene_entity_2:  "sensor.disabled"
+
+  scene_label_2:   ""
+
   scene_type_2:    "scene"
+
   scene_icon_2:    "movie_clapper"
 
-  scene_entity_3:  "scene.movie_night"
-  scene_label_3:   "Movie Night"
+
+
+  scene_entity_3:  "sensor.disabled"
+
+  scene_label_3:   ""
+
   scene_type_3:    "scene"
+
   scene_icon_3:    "movie_clapper"
 
-  scene_entity_4:  "scene.good_night"
-  scene_label_4:   "Good Night"
+
+
+  scene_entity_4:  "sensor.disabled"
+
+  scene_label_4:   ""
+
   scene_type_4:    "scene"
+
   scene_icon_4:    "movie_clapper"
 
+
+
   scene_entity_5:  "sensor.disabled"
+
   scene_label_5:   ""
+
   scene_type_5:    "scene"
+
   scene_icon_5:    "movie_clapper"
 
+
+
   scene_entity_6:  "sensor.disabled"
+
   scene_label_6:   ""
+
   scene_type_6:    "scene"
+
   scene_icon_6:    "movie_clapper"
 
 
+
   # ── 5 │ HVAC ─────────────────────────────────────────────────────────────────
-  #
-  #  Pick ONE configuration.  Set the entity/entities below, then uncomment the
-  #  matching packages in the ENGINE block further down this file.
-  #  The nav button icon is set automatically based on the widget type selected.
-  #
-  # ── Option 1: Combined HVAC  (heating + cooling via HA entity) ── DEFAULT ────
-  hvac_entity: "climate.hvac"
-  #
-  # ── Option 2: Thermostat only  (heating) ─────────────────────────────────────
-  # thermostat_entity: "climate.upstairs_heat"
-  #
-  # ── Option 3: Air conditioner only  (cooling) ────────────────────────────────
-  # air_conditioner_entity: "climate.downstairs_cool"
-  #
-  # ── Option 4: Thermostat + Air conditioner  (separate units) ─────────────────
-  # thermostat_entity:      "climate.upstairs_heat"
-  # air_conditioner_entity: "climate.downstairs_cool"
+
+  hvac_entity: "sensor.disabled"
+  thermostat_entity: "climate.haloszoba_futes_panel_gazkazan"
+
 
 
   # ── 6 │ LIGHTS  (up to 6 slots) ──────────────────────────────────────────────
-  #
-  #  light_type : light | switch | input_boolean
-  #  light_icon : ceiling_lamp | ceiling_lamp_variant | night_lamp | lightbulb
-  #               spotlights_group | desk_lamp | pendant_lamp | music
-  #               curtains | garage | movie_clapper | blinds | play_circle
-  #               ceiling_fan | floor_fan | bed | heart | tv
-  #
-  #  Unused slots → set light_entity_N: "sensor.disabled"
-  #
-  light_entity_1:      "light.yourmainlight"
-  light_label_name_1:  "Main Lights"
-  light_type_1:        "light"
-  light_icon_1:        "ceiling_lamp"
-  light_icon_font_1:   "ceiling_lamp_font"   # change when you change light_icon_1
 
-  light_entity_2:      "light.yourlamps"
-  light_label_name_2:  "Lamps"
-  light_type_2:        "light"
-  light_icon_2:        "night_lamp"
-  light_icon_font_2:   "night_lamp_font"     # change when you change light_icon_2
+  light_entity_1:      "sensor.disabled"
 
-  light_entity_3:      "light.yournightlight"
-  light_label_name_3:  "Night Light"
-  light_type_3:        "switch"
-  light_icon_3:        "night_lamp"
-  light_icon_font_3:   "night_lamp_font"     # change when you change light_icon_3
+  light_label_name_1:  ""
 
-  light_entity_4:      "input_boolean.yourbedtime"
-  light_label_name_4:  "Bedtime"
-  light_type_4:        "input_boolean"
-  light_icon_4:        "bed"
-  light_icon_font_4:   "mdi_72_ref"          # change when you change light_icon_4
+  light_type_1:        ""
+
+  light_icon_1:        ""
+
+  light_icon_font_1:   "icons_72_ref"
+
+
+
+  light_entity_2:      "sensor.disabled"
+
+  light_label_name_2:  ""
+
+  light_type_2:        ""
+
+  light_icon_2:        ""
+
+  light_icon_font_2:   "icons_72_ref"
+
+
+
+  light_entity_3:      "sensor.disabled"
+
+  light_label_name_3:  ""
+
+  light_type_3:        ""
+
+  light_icon_3:        ""
+
+  light_icon_font_3:   "icons_72_ref"
+
+
+
+  light_entity_4:      "sensor.disabled"
+
+  light_label_name_4:  ""
+
+  light_type_4:        ""
+
+  light_icon_4:        ""
+
+  light_icon_font_4:   "icons_72_ref"
+
+
 
   light_entity_5:      "sensor.disabled"
+
   light_label_name_5:  ""
+
   light_type_5:        ""
+
   light_icon_5:        ""
-  light_icon_font_5:   "icons_72_ref"        # change when you change light_icon_5
+
+  light_icon_font_5:   "icons_72_ref"
+
+
 
   light_entity_6:      "sensor.disabled"
+
   light_label_name_6:  ""
+
   light_type_6:        ""
+
   light_icon_6:        ""
-  light_icon_font_6:   "icons_72_ref"        # change when you change light_icon_6
+
+  light_icon_font_6:   "icons_72_ref"
+
 
 
   # ── 7 │ FANS  (up to 6 slots) ────────────────────────────────────────────────
-  #
-  #  fan_type : fan | switch | input_boolean
-  #  fan_icon : ceiling_fan | floor_fan | ceiling_lamp | ceiling_lamp_variant
-  #             night_lamp | lightbulb | spotlights_group | desk_lamp | pendant_lamp
-  #             music | curtains | garage | movie_clapper | blinds | play_circle
-  #             bed | heart | tv
-  #
-  #  Unused slots → set fan_entity_N: "sensor.disabled"
-  #
-  fan_entity_1:     "fan.yourceilingfan"
-  fan_label_name_1: "Ceiling Fan"
-  fan_type_1:       "fan"
-  fan_icon_1:       "ceiling_fan"
 
-  fan_entity_2:     "fan.yourfloorfan"
-  fan_label_name_2: "Fan"
-  fan_type_2:       "fan"
-  fan_icon_2:       "floor_fan"
+  fan_entity_1:     "sensor.disabled"
+
+  fan_label_name_1: ""
+
+  fan_type_1:       ""
+
+  fan_icon_1:       ""
+
+
+
+  fan_entity_2:     "sensor.disabled"
+
+  fan_label_name_2: ""
+
+  fan_type_2:       ""
+
+  fan_icon_2:       ""
+
+
 
   fan_entity_3:     "sensor.disabled"
+
   fan_label_name_3: ""
+
   fan_type_3:       ""
+
   fan_icon_3:       ""
 
+
+
   fan_entity_4:     "sensor.disabled"
+
   fan_label_name_4: ""
+
   fan_type_4:       ""
+
   fan_icon_4:       ""
 
+
+
   fan_entity_5:     "sensor.disabled"
+
   fan_label_name_5: ""
+
   fan_type_5:       ""
+
   fan_icon_5:       ""
 
+
+
   fan_entity_6:     "sensor.disabled"
+
   fan_label_name_6: ""
+
   fan_type_6:       ""
+
   fan_icon_6:       ""
 
 
+
   # ── 8 │ COVERS  (up to 6 slots) ──────────────────────────────────────────────
-  #
-  #  Supports any HA cover entity: blinds, roller shutters, curtains, garage doors.
-  #  The detail page shows a position bar, Open/Stop/Close buttons, and a position
-  #  slider.  Position is 0 (closed) → 100 (fully open).
-  #
-  #  cover_icon : curtains | garage | blinds | ceiling_lamp | ceiling_lamp_variant
-  #               night_lamp | lightbulb | spotlights_group | desk_lamp | pendant_lamp
-  #               music | movie_clapper | play_circle | ceiling_fan | floor_fan
-  #               bed | heart | tv
-  #
-  #  Unused slots → set cover_entity_N: "sensor.disabled"
-  #
+
   cover_entity_1:     "sensor.disabled"
+
   cover_label_name_1: ""
+
   cover_icon_1:       "curtains"
 
+
+
   cover_entity_2:     "sensor.disabled"
+
   cover_label_name_2: ""
+
   cover_icon_2:       "curtains"
 
+
+
   cover_entity_3:     "sensor.disabled"
+
   cover_label_name_3: ""
+
   cover_icon_3:       "curtains"
 
+
+
   cover_entity_4:     "sensor.disabled"
+
   cover_label_name_4: ""
+
   cover_icon_4:       "curtains"
 
+
+
   cover_entity_5:     "sensor.disabled"
+
   cover_label_name_5: ""
+
   cover_icon_5:       "curtains"
 
+
+
   cover_entity_6:     "sensor.disabled"
+
   cover_label_name_6: ""
+
   cover_icon_6:       "curtains"
 
 
-# ── 9 │ RELAYS  (optional — hardware relay board on GPIO40 / GPIO2 / GPIO1) ───
-#
-# Uncomment the switch block below to expose the three onboard relays as
-# Home Assistant switch entities.  Wire Relay 1 to GPIO40, Relay 2 to GPIO2,
-# and Relay 3 to GPIO1 (matches the Guition-ESP32-S3-4848S040 relay header).
-#
-# switch:
-#   - platform: gpio
-#     id: relay_1
-#     name: "Relay 1"
-#     pin:
-#       number: GPIO40
-#       inverted: false
-#   - platform: gpio
-#     id: relay_2
-#     name: "Relay 2"
-#     pin:
-#       number: GPIO2
-#       inverted: false
-#   - platform: gpio
-#     id: relay_3
-#     name: "Relay 3"
-#     pin:
-#       number: GPIO1
-#       inverted: false
+
+# ── 9 │ RELAYS (Gázkazán relé engedélyezése) ──────────────────────────────────
+
+switch:
+
+  - platform: gpio
+
+    id: relay_1
+
+    name: "Gázkazán Relé"
+
+    pin:
+
+      number: GPIO40
+
+      inverted: false
+
 
 
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  ENGINE  —  Do not edit below unless you know what you are doing.           ║
+
+# ║  ENGINE                                                                      ║
+
 # ╚══════════════════════════════════════════════════════════════════════════════╝
+
+
 
 packages:
 
-  # ── Display name preferences — edit this file to rename pages and buttons ──
+
+
   preferences:        !include Guition-ESP32/widgets/preferences.yaml
 
-  # ── Hardware core ──────────────────────────────────────────────────────────
-  hardware: !include Guition-ESP32/hardware.yaml
+  hardware:           !include Guition-ESP32/hardware.yaml
 
-  # ── Widget engine ─────────────────────────────────────────────────────────
   home:               !include Guition-ESP32/widgets/home/home.yaml
+
   lights_config:      !include Guition-ESP32/widgets/light/lights_config.yaml
+
   fans_config:        !include Guition-ESP32/widgets/fan/fans_config.yaml
+
   shortcuts:          !include Guition-ESP32/widgets/shortcuts/shortcuts.yaml
+
   covers_config:      !include Guition-ESP32/widgets/cover/covers_config.yaml
+
   settings:           !include Guition-ESP32/widgets/settings/settings.yaml
+
   menu_controls_main: !include Guition-ESP32/widgets/menu_controls_main.yaml
+
   loading_page:       !include Guition-ESP32/widgets/loading_page.yaml
 
-  # ── HVAC + Devices layout — activate ONE block to match Section 4 above ───────
-  #
-  # Option 1 (DEFAULT): Combined HVAC from Home Assistant
+
+
   devices: !include Guition-ESP32/widgets/devices.yaml
-  hvac:    !include Guition-ESP32/widgets/hvac/hvac_widget.yaml
-  #
-  # Option 2: Thermostat only
-  # devices: !include Guition-ESP32/widgets/devices.yaml
-  # hvac:    !include Guition-ESP32/widgets/hvac/thermostat_widget.yaml
-  #
-  # Option 3: Air conditioner only
-  # devices: !include Guition-ESP32/widgets/devices.yaml
-  # hvac:    !include Guition-ESP32/widgets/hvac/air_conditioner_widget.yaml
-  #
-  # Option 4: Thermostat + Air conditioner  (two separate units)
-  # devices: !include Guition-ESP32/widgets/hvac/hvac_combo_bundle.yaml
+
+  hvac:    !include Guition-ESP32/widgets/hvac/thermostat_widget.yaml
+  
+
+api:
+
+  encryption:
+
+    key: !secret futes_panel__encryption_key 

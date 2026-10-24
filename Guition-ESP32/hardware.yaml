@@ -538,9 +538,15 @@ i2c:
 touchscreen:
   platform: gt911
   id: my_touchscreen
+  calibration:
+      x_min: 0
+      x_max: 480
+      y_min: 0
+      y_max: 480
   transform:
     mirror_x: false
     mirror_y: false
+    swap_xy: false
   display: my_display
   on_release:
       - if:
