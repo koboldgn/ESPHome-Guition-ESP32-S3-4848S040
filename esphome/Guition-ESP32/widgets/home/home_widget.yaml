@@ -1310,8 +1310,28 @@ script:
       - lambda: |-
           std::string state = state_str;
 
+          static const std::map<std::string, std::string> hu_weather = {
+            {"clear-night", "Tiszta éjszaka"},
+            {"cloudy", "Felhős"},
+            {"exceptional", "Rendkívüli"},
+            {"fog", "Ködös"},
+            {"hail", "Jégeső"},
+            {"lightning", "Zivatar"},
+            {"lightning-rainy", "Zivatar és eső"},
+            {"partlycloudy", "Részben felhős"},
+            {"pouring", "Szakadó eső"},
+            {"rainy", "Esős"},
+            {"snowy", "Havas"},
+            {"snowy-rainy", "Havas eső"},
+            {"sunny", "Napos"},
+            {"windy", "Szeles"},
+            {"windy-variant", "Változó szél"}
+          };
+          auto hu_it = hu_weather.find(state);
           auto it = id(weather_translations).find(state);
-          std::string translated_state = (it != id(weather_translations).end()) ? it->second : state;
+          std::string translated_state =
+              (hu_it != hu_weather.end()) ? hu_it->second :
+              (it != id(weather_translations).end()) ? it->second : state;
 
           // Title-case: capitalise the first letter of every word
           bool cap_next = true;
