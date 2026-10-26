@@ -437,3 +437,13 @@
   id: cherry_bg_img
   type: rgb565
 
+  #############################
+  ########## CAR ##############
+  #############################
+
+- platform: file
+  file: 'Guition-ESP32/img/car/2022-Nissan-Leaf-Glacier-White.png'
+  id: car_image
+  type: rgb565
+  resize: 440x247
+  transparency: alpha_channel
