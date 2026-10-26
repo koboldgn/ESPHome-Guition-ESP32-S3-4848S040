@@ -379,7 +379,6 @@ packages:
   menu_controls_main: !include Guition-ESP32/widgets/menu_controls_main.yaml
 
   loading_page:       !include Guition-ESP32/widgets/loading_page.yaml
-  car_widget:         !include Guition-ESP32/widgets/car_widget.yaml
   devices:            !include Guition-ESP32/widgets/devices.yaml
   hvac:               !include Guition-ESP32/widgets/hvac/thermostat_widget.yaml
   

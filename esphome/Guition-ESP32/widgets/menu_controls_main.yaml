@@ -47,9 +47,6 @@ lvgl:
                       id: lights_group_page_btn
                       bg_opa: TRANSP
                   - lvgl.button.update:
-                      id: car_page_btn
-                      bg_opa: TRANSP
-                  - lvgl.button.update:
                       id: devices_page_btn
                       bg_opa: TRANSP
 
@@ -78,41 +75,6 @@ lvgl:
                       bg_opa: 100%
                   - lvgl.button.update:
                       id: home_page_btn
-                      bg_opa: TRANSP
-                  - lvgl.button.update:
-                      id: car_page_btn
-                      bg_opa: TRANSP
-                  - lvgl.button.update:
-                      id: devices_page_btn
-                      bg_opa: TRANSP
-            - button:
-                id: car_page_btn
-                clickable: true
-                width: 60
-                height: 60
-                radius: 10
-                bg_opa: TRANSP
-                shadow_opa: TRANSP
-                widgets:
-                  - label:
-                      align: CENTER
-                      text_color: color_steel_blue
-                      text_font: mdi_icons_90
-                      text: "\U000F15B5"
-                on_press:
-                  - lvgl.page.show:
-                      id: car_page
-                      animation: OUT_RIGHT
-                      time: 300ms
-                  - lvgl.button.update:
-                      id: car_page_btn
-                      bg_color: color_slate_blue_gray
-                      bg_opa: 100%
-                  - lvgl.button.update:
-                      id: home_page_btn
-                      bg_opa: TRANSP
-                  - lvgl.button.update:
-                      id: lights_group_page_btn
                       bg_opa: TRANSP
                   - lvgl.button.update:
                       id: devices_page_btn
@@ -145,7 +107,4 @@ lvgl:
                       bg_opa: TRANSP
                   - lvgl.button.update:
                       id: lights_group_page_btn
-                      bg_opa: TRANSP
-                  - lvgl.button.update:
-                      id: car_page_btn
                       bg_opa: TRANSP
