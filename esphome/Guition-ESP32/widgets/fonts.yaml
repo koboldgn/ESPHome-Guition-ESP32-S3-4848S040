@@ -1,150 +1,356 @@
-- file: "Guition-ESP32/fonts/icons_v2.ttf"
-  id: icons_72
-  size: 72
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/icons_v2.ttf"
-  id: icons_90
-  size: 90
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/mdi.ttf"
-  id: mdi_72
-  size: 72
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/mdi.ttf"
-  id: mdi_90
-  size: 90
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
-  id: mdi_icons_60
-  size: 60
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
-  id: mdi_icons_72
-  size: 72
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
-  id: mdi_icons_90
-  size: 90
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/fan_icons.ttf"
-  id: fan_icons_90
-  size: 90
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/icons_v2.ttf"
-  id: icons_28
-  size: 28
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/icons_v2.ttf"
-  id: icons_24
-  size: 24
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/icons_v2.ttf"
-  id: icons_32
-  size: 32
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/icons_v2.ttf"
-  id: icons_36
-  size: 36
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/icons_v2.ttf"
-  id: icons_38
-  size: 38
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/icons_v2.ttf"
-  id: icons_48
-  size: 48
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
-  id: mdi_icons_24
-  size: 24
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
-  id: mdi_icons_40
-  size: 40
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
-  id: mdi_icons_52
-  size: 52
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
-  id: mdi_icons_68
-  size: 68
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
-  id: nunito_16
-  size: 16
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
-  id: nunito_18
-  size: 18
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
-  id: nunito_20
-  size: 20
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
-  id: nunito_30
-  size: 30
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
-  id: nunito_36
-  size: 36
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
-  id: nunito_44
-  size: 44
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
-  id: nunito_48
-  size: 48
-  bpp: 8
-
 - file: "Guition-ESP32/fonts/gluqlo.ttf"
   id: gluqlo_64
   size: 64
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
-  id: nunito_64
-  size: 64
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/MPLUSRounded1c-Regular.ttf"
-  id: mplus_16
-  size: 16
-  bpp: 8
-
-- file: "Guition-ESP32/fonts/MPLUSRounded1c-Regular.ttf"
-  id: montserrat_20
-  size: 20
-  bpp: 8
+  bpp: 4
+  glyphs: "0123456789"
 
 - file: "Guition-ESP32/fonts/gluqlo.ttf"
   id: gluqlo_96
   size: 96
-  bpp: 8
+  bpp: 4
+  glyphs: "0123456789"
 
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_16
+  size: 16
+  bpp: 4
+  glyphsets:
+    - GF_Latin_Core
+    - GF_Cyrillic_Core
+  extras:
+    - file: "Guition-ESP32/fonts/Jua-Regular.ttf"
+      glyphs:
+        - "\U0000C774"
+        - "\U0000B8E8"
+        - "\U0000B9C8"
+
+- file: "Guition-ESP32/fonts/MPLUSRounded1c-Regular.ttf"
+  id: mplus_16
+  size: 16
+  bpp: 4
+  glyphs: "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя .,!?-_:°²³¹"
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_18
+  size: 18
+  bpp: 4
+  glyphsets:
+    - GF_Latin_Core
+    - GF_Cyrillic_Core
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_20
+  size: 20
+  bpp: 4
+  glyphsets:
+    - GF_Latin_Core
+    - GF_Cyrillic_Core
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_30
+  size: 30
+  bpp: 4
+  glyphsets:
+    - GF_Latin_Core
+    - GF_Cyrillic_Core
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_36
+  size: 36
+  bpp: 4
+  glyphsets:
+    - GF_Latin_Core
+    - GF_Cyrillic_Core
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_44
+  size: 44
+  bpp: 4
+  glyphsets:
+    - GF_Latin_Core
+    - GF_Cyrillic_Core
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_48
+  size: 48
+  bpp: 4
+  glyphsets:
+    - GF_Latin_Core
+    - GF_Cyrillic_Core
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_64
+  size: 64
+  bpp: 4
+  glyphsets:
+    - GF_Latin_Core
+    - GF_Cyrillic_Core
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_84
+  size: 84
+  bpp: 4
+  glyphsets:
+    - GF_Latin_Core
+    - GF_Cyrillic_Core
+
+- file: "Guition-ESP32/fonts/MPLUSRounded1c-Regular.ttf"
+  id: montserrat_20
+  size: 20
+  bpp: 4
+  glyphs: "0123456789"
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_24
+  size: 24
+  bpp: 4
+  glyphs:
+    - "\U0000e900"
+    - "\U0000e901"
+    - "\U0000e925"
+    - "\U0000e93b"
+    - "\U0000e936"
+    - "\U0000e92e"
+    - "\U0000e935"
+    - "\U0000e931"
+    - "\U0000e932"
+    - "\U0000e933"
+    - "\U0000e934"
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_28
+  size: 28
+  bpp: 4
+  glyphs:
+    - "\U0000e902"
+    - "\U0000e926"
+    - "\U0000e927"
+    - "\U0000e93a"
+    - "\U0000e939"
+    - "\U0000e92f"
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_32
+  size: 32
+  bpp: 4
+  glyphs:
+    - "\U0000e91f"
+    - "\U0000e920"
+    - "\U0000e91c"
+    - "\U0000e90e"
+    - "\U0000e90f"
+    - "\U0000e910"
+    - "\U0000e911"
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_36
+  size: 36
+  bpp: 4
+  glyphs:
+    - "\U0000e903"
+    - "\U0000e904"
+    - "\U0000e905"
+    - "\U0000e906"
+    - "\U0000e907"
+    - "\U0000e908"
+    - "\U0000e91a"
+    - "\U0000e92e"
+    - "\U0000e936"
+    - "\U0000e93b"
+    - "\U0000e909"
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_38
+  size: 38
+  bpp: 4
+  glyphs:
+    - "\U0000e909"
+    - "\U0000e90c"
+    - "\U0000e90d"
+    - "\U0000e912"
+    - "\U0000e913"
+    - "\U0000e914"
+    - "\U0000e90a"
+    - "\U0000e90b"
+    - "\U0000e91c"
+    - "\U0000e923"
+    - "\U0000e924"
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_48
+  size: 48
+  bpp: 4
+  glyphs:
+    - "\U0000e90a"
+    - "\U0000e90b"
+    - "\U0000e91f"
+    - "\U0000e920"
+    - "\U0000e91c"
+    - "\U0000e923"
+    - "\U0000e924"
+    - "\U0000e93b"
+    - "\U0000e936"
+    - "\U0000e909"
+    - "\U0000E947"
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_72
+  size: 72
+  bpp: 4
+  glyphs:
+    - "\U0000e908"
+    - "\U0000e915"
+    - "\U0000e916"
+    - "\U0000e917"
+    - "\U0000e918"
+    - "\U0000e919"
+    - "\U0000e921"
+    - "\U0000e91b"
+    - "\U0000e922"
+    - "\U0000e925"
+    - "\U0000e93b"
+    - "\U0000E945"
+    - "\U0000E946"
+    - "\U0000E947"
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_90
+  size: 90
+  bpp: 4
+  glyphs:
+    - "\U0000e908"
+    - "\U0000e915"
+    - "\U0000e916"
+    - "\U0000e917"
+    - "\U0000e918"
+    - "\U0000e921"
+    - "\U0000e919"
+    - "\U0000e91b"
+    - "\U0000e91f"
+    - "\U0000e920"
+    - "\U0000e922"
+    - "\U0000E945"
+    - "\U0000E946"
+    - "\U0000E947"
+
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_24
+  size: 24
+  bpp: 4
+  glyphs:
+    - "\U000F068A"
+    - "\U000F1828"
+    - "\U000F099D"
+    - "\U000F06BB"
+    - "\U000F099E"
+    - "\U000F0498"
+    - "\U000F00ED"
+
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_40
+  size: 40
+  bpp: 4
+  glyphs:
+    - "\U000F068A"
+    - "\U000F1828"
+    - "\U000F099D"
+    - "\U000F06BB"
+    - "\U000F099E"
+    - "\U000F0498"
+    - "\U000F040C"
+    - "\U000F00AC"
+
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_52
+  size: 52
+  bpp: 4
+  glyphs:
+    - "\U000F068A"
+    - "\U000F1828"
+    - "\U000F099D"
+    - "\U000F06BB"
+    - "\U000F099E"
+    - "\U000F0498"
+    - "\U000F0826"
+    - "\U000F1A46"
+
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_68
+  size: 68
+  bpp: 4
+  glyphs:
+    - "\U000F068A"
+    - "\U000F1828"
+    - "\U000F099D"
+    - "\U000F06BB"
+    - "\U000F099E"
+    - "\U000F0498"
+
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_60
+  size: 60
+  bpp: 4
+  glyphs:
+    - "\U000F1797"
+    - "\U000F0210"
+
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_72
+  size: 72
+  bpp: 4
+  glyphs:
+    - "\U000F099D"
+    - "\U000F040C"
+    - "\U000F00AC"
+    - "\U000F06B5"
+    - "\U000F0748"
+    - "\U000F1A60"
+    - "\U000F1846"
+
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_90
+  size: 90
+  bpp: 4
+  glyphs:
+    - "\U000F06B5"
+    - "\U000F0748"
+    - "\U000F0381"
+    - "\U000F1846"
+
+- file: "Guition-ESP32/fonts/mdi.ttf"
+  id: mdi_72
+  size: 72
+  bpp: 4
+  glyphs:
+    - "\U000F02E3"
+    - "\U000F08D0"
+    - "\U000F0502"
+    - "\U000F040C"
+    - "\U000F00AC"
+
+- file: "Guition-ESP32/fonts/mdi.ttf"
+  id: mdi_90
+  size: 90
+  bpp: 4
+  glyphs:
+    - "\U000F02E3"
+    - "\U000F08D0"
+    - "\U000F0502"
+    - "\U000F040C"
+    - "\U000F00AC"
+
+- file: "Guition-ESP32/fonts/fan_icons.ttf"
+  id: fan_icons_72
+  size: 72
+  bpp: 4
+  glyphs:
+    - "\U0000E900"
+    - "\U0000E901"
+
+- file: "Guition-ESP32/fonts/fan_icons.ttf"
+  id: fan_icons_90
+  size: 90
+  bpp: 4
+  glyphs:
+    - "\U0000E900"
+    - "\U0000E901"
