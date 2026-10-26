@@ -70,7 +70,7 @@ lvgl:
             radius: 0
 
         # Car Image
-        - img:
+        - image:
             id: car_main_img
             src: car_image
             align: TOP_MID
