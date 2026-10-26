@@ -335,6 +335,12 @@
   type: rgb565
   resize: 60x80
 
+- platform: file
+  file: 'Guition-ESP32/img/flags/hu.png'
+  id: flags_hu_img
+  type: rgb565
+  resize: 60x80
+
   #############################
   ########## BATTERY ##########
   #############################

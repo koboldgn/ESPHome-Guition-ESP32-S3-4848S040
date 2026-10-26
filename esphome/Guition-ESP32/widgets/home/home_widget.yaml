@@ -909,8 +909,8 @@ script:
                   static char date_buf[32];
                   auto now = id(homeassistant_time).now();
                   int lang = id(current_language);
-                  if (lang < 0 || lang > 8) lang = 7;
-                  static const char* days[9][7] = {
+                  if (lang < 0 || lang > 9) lang = 7;
+                  static const char* days[10][7] = {
                     {"So","Mo","Di","Mi","Do","Fr","Sa"},
                     {"dom","lun","mar","mié","jue","vie","sáb"},
                     {"dim","lun","mar","mer","jeu","ven","sam"},
@@ -920,8 +920,13 @@ script:
                     {"вс","пн","вт","ср","чт","пт","сб"},
                     {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"},
                     {"ndz","pon","wt","śr","czw","pt","sob"},
+                    {"V","H","K","Sze","Cs","P","Szo"},
                   };
-                  snprintf(date_buf, sizeof(date_buf), "%s, %d/%02d/%04d", days[lang][(now.day_of_week)-1], now.month, now.day_of_month, now.year);
+                  if (lang == 9) {
+                    snprintf(date_buf, sizeof(date_buf), "%s, %04d. %02d. %02d.", days[lang][now.day_of_week - 1], now.year, now.month, now.day_of_month);
+                  } else {
+                    snprintf(date_buf, sizeof(date_buf), "%s, %d/%02d/%04d", days[lang][(now.day_of_week)-1], now.month, now.day_of_month, now.year);
+                  }
                   return date_buf;
 
   - id: notification_dismiss
@@ -985,8 +990,8 @@ script:
                   static char buf[40];
                   auto now = id(homeassistant_time).now();
                   int lang = id(current_language);
-                  if (lang < 0 || lang > 8) lang = 7;
-                  static const char* days[9][7] = {
+                  if (lang < 0 || lang > 9) lang = 7;
+                  static const char* days[10][7] = {
                     {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
                     {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
                     {"dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"},
@@ -996,8 +1001,9 @@ script:
                     {"воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"},
                     {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"},
                     {"niedziela","poniedziałek","wtorek","środa","czwartek","piątek","sobota"},
+                    {"vas\u00e1rnap","h\u00e9tf\u0151","kedd","szerda","cs\u00fct\u00f6rt\u00f6k","p\u00e9ntek","szombat"},
                   };
-                  static const char* months[9][12] = {
+                  static const char* months[10][12] = {
                     {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"},
                     {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"},
                     {"janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"},
@@ -1007,8 +1013,13 @@ script:
                     {"январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"},
                     {"January","February","March","April","May","June","July","August","September","October","November","December"},
                     {"styczeń","luty","marzec","kwiecień","maj","czerwiec","lipiec","sierpień","wrzesień","październik","listopad","grudzień"},
+                    {"janu\u00e1r","febru\u00e1r","m\u00e1rcius","\u00e1prilis","m\u00e1jus","j\u00fanius","j\u00falius","augusztus","szeptember","okt\u00f3ber","november","december"},
                   };
-                  snprintf(buf, sizeof(buf), "%s, %s %d, %d", days[lang][now.day_of_week - 1], months[lang][now.month - 1], now.day_of_month, now.year);
+                  if (lang == 9) {
+                    snprintf(buf, sizeof(buf), "%04d. %s %d., %s", now.year, months[lang][now.month - 1], now.day_of_month, days[lang][now.day_of_week - 1]);
+                  } else {
+                    snprintf(buf, sizeof(buf), "%s, %s %d, %d", days[lang][now.day_of_week - 1], months[lang][now.month - 1], now.day_of_month, now.year);
+                  }
                   return buf;
           else:
             # Not style 0 — digital is never needed, hide it
@@ -1073,8 +1084,8 @@ script:
             static char buf[40];
             auto now = id(homeassistant_time).now();
             int lang = id(current_language);
-            if (lang < 0 || lang > 8) lang = 7;
-            static const char* days[9][7] = {
+            if (lang < 0 || lang > 9) lang = 7;
+            static const char* days[10][7] = {
               {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
               {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
               {"dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"},
@@ -1084,8 +1095,9 @@ script:
               {"воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"},
               {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"},
               {"niedziela","poniedziałek","wtorek","środa","czwartek","piątek","sobota"},
+              {"vas\u00e1rnap","h\u00e9tf\u0151","kedd","szerda","cs\u00fct\u00f6rt\u00f6k","p\u00e9ntek","szombat"},
             };
-            static const char* months[9][12] = {
+            static const char* months[10][12] = {
               {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"},
               {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"},
               {"janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"},
@@ -1095,8 +1107,13 @@ script:
               {"январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"},
               {"January","February","March","April","May","June","July","August","September","October","November","December"},
               {"styczeń","luty","marzec","kwiecień","maj","czerwiec","lipiec","sierpień","wrzesień","październik","listopad","grudzień"},
+              {"janu\u00e1r","febru\u00e1r","m\u00e1rcius","\u00e1prilis","m\u00e1jus","j\u00fanius","j\u00falius","augusztus","szeptember","okt\u00f3ber","november","december"},
             };
-            snprintf(buf, sizeof(buf), "%s, %s %d, %d", days[lang][now.day_of_week - 1], months[lang][now.month - 1], now.day_of_month, now.year);
+            if (lang == 9) {
+              snprintf(buf, sizeof(buf), "%04d. %s %d., %s", now.year, months[lang][now.month - 1], now.day_of_month, days[lang][now.day_of_week - 1]);
+            } else {
+              snprintf(buf, sizeof(buf), "%s, %s %d, %d", days[lang][now.day_of_week - 1], months[lang][now.month - 1], now.day_of_month, now.year);
+            }
             return buf;
 
   - id: screensaver_update_calendar_events
@@ -1108,8 +1125,8 @@ script:
             std::string e = id(cal_end_1).state;
             if (s.empty()) return std::string(" ");
             int lang = id(current_language);
-            if (lang < 0 || lang > 8) lang = 7;
-            static const char* days[9][7] = {
+            if (lang < 0 || lang > 9) lang = 7;
+            static const char* days[10][7] = {
               {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
               {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
               {"dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"},
@@ -1119,8 +1136,9 @@ script:
               {"воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"},
               {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"},
               {"niedziela","poniedziałek","wtorek","środa","czwartek","piątek","sobota"},
+              {"vas\u00e1rnap","h\u00e9tf\u0151","kedd","szerda","cs\u00fct\u00f6rt\u00f6k","p\u00e9ntek","szombat"},
             };
-            static const char* months[9][12] = {
+            static const char* months[10][12] = {
               {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"},
               {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"},
               {"janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"},
@@ -1130,6 +1148,7 @@ script:
               {"январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"},
               {"January","February","March","April","May","June","July","August","September","October","November","December"},
               {"styczeń","luty","marzec","kwiecień","maj","czerwiec","lipiec","sierpień","wrzesień","październik","listopad","grudzień"},
+              {"janu\u00e1r","febru\u00e1r","m\u00e1rcius","\u00e1prilis","m\u00e1jus","j\u00fanius","j\u00falius","augusztus","szeptember","okt\u00f3ber","november","december"},
             };
             struct tm ts = {};
             bool all_day = (s.size() <= 10);
@@ -1175,8 +1194,8 @@ script:
             std::string e = id(cal_end_2).state;
             if (s.empty()) return std::string(" ");
             int lang = id(current_language);
-            if (lang < 0 || lang > 8) lang = 7;
-            static const char* days[9][7] = {
+            if (lang < 0 || lang > 9) lang = 7;
+            static const char* days[10][7] = {
               {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
               {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
               {"dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"},
@@ -1186,8 +1205,9 @@ script:
               {"воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"},
               {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"},
               {"niedziela","poniedziałek","wtorek","środa","czwartek","piątek","sobota"},
+              {"vas\u00e1rnap","h\u00e9tf\u0151","kedd","szerda","cs\u00fct\u00f6rt\u00f6k","p\u00e9ntek","szombat"},
             };
-            static const char* months[9][12] = {
+            static const char* months[10][12] = {
               {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"},
               {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"},
               {"janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"},
@@ -1197,6 +1217,7 @@ script:
               {"январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"},
               {"January","February","March","April","May","June","July","August","September","October","November","December"},
               {"styczeń","luty","marzec","kwiecień","maj","czerwiec","lipiec","sierpień","wrzesień","październik","listopad","grudzień"},
+              {"janu\u00e1r","febru\u00e1r","m\u00e1rcius","\u00e1prilis","m\u00e1jus","j\u00fanius","j\u00falius","augusztus","szeptember","okt\u00f3ber","november","december"},
             };
             struct tm ts = {};
             bool all_day = (s.size() <= 10);
@@ -1242,8 +1263,8 @@ script:
             std::string e = id(cal_end_3).state;
             if (s.empty()) return std::string(" ");
             int lang = id(current_language);
-            if (lang < 0 || lang > 8) lang = 7;
-            static const char* days[9][7] = {
+            if (lang < 0 || lang > 9) lang = 7;
+            static const char* days[10][7] = {
               {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
               {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
               {"dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"},
@@ -1253,8 +1274,9 @@ script:
               {"воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"},
               {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"},
               {"niedziela","poniedziałek","wtorek","środa","czwartek","piątek","sobota"},
+              {"vas\u00e1rnap","h\u00e9tf\u0151","kedd","szerda","cs\u00fct\u00f6rt\u00f6k","p\u00e9ntek","szombat"},
             };
-            static const char* months[9][12] = {
+            static const char* months[10][12] = {
               {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"},
               {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"},
               {"janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"},
@@ -1264,6 +1286,7 @@ script:
               {"январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"},
               {"January","February","March","April","May","June","July","August","September","October","November","December"},
               {"styczeń","luty","marzec","kwiecień","maj","czerwiec","lipiec","sierpień","wrzesień","październik","listopad","grudzień"},
+              {"janu\u00e1r","febru\u00e1r","m\u00e1rcius","\u00e1prilis","m\u00e1jus","j\u00fanius","j\u00falius","augusztus","szeptember","okt\u00f3ber","november","december"},
             };
             struct tm ts = {};
             bool all_day = (s.size() <= 10);
@@ -1412,8 +1435,8 @@ script:
             return r != nullptr;
           };
           int lang = id(current_language);
-          if (lang < 0 || lang > 8) lang = 7;
-          static const char* days[9][7] = {
+          if (lang < 0 || lang > 9) lang = 7;
+          static const char* days[10][7] = {
             {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
             {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
             {"dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"},
@@ -1423,8 +1446,9 @@ script:
             {"воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"},
             {"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"},
             {"niedziela","poniedziałek","wtorek","środa","czwartek","piątek","sobota"},
+            {"vas\u00e1rnap","h\u00e9tf\u0151","kedd","szerda","cs\u00fct\u00f6rt\u00f6k","p\u00e9ntek","szombat"},
           };
-          static const char* months[9][12] = {
+          static const char* months[10][12] = {
             {"Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"},
             {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"},
             {"janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"},
@@ -1434,6 +1458,7 @@ script:
             {"январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"},
             {"January","February","March","April","May","June","July","August","September","October","November","December"},
             {"styczeń","luty","marzec","kwiecień","maj","czerwiec","lipiec","sierpień","wrzesień","październik","listopad","grudzień"},
+            {"janu\u00e1r","febru\u00e1r","m\u00e1rcius","\u00e1prilis","m\u00e1jus","j\u00fanius","j\u00falius","augusztus","szeptember","okt\u00f3ber","november","december"},
           };
           struct CalEvent { std::string title, start, end_t; };
           std::vector<CalEvent> events = {
@@ -1499,6 +1524,7 @@ select:
             state_str: !lambda 'return id(weather_state_sensor).state;'
         - lambda: |-
             ESP_LOGI("LANGUAGE", "Weather translations updated");
+        - script.execute: fetch_weather_forecast
 
 esphome:
   on_boot:

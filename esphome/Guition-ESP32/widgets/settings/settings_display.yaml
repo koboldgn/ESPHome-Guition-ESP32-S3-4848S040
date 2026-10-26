@@ -37,6 +37,7 @@ mapping:
       6: flags_ru_img
       7: flags_us_img
       8: flags_pl_img
+      9: flags_hu_img
 
   - id: flag_icon_mapping_name
     from: int
@@ -51,6 +52,7 @@ mapping:
       6: ru
       7: en
       8: pl
+      9: hu
 
   - id: flag_icon_mapping_index
     from: string
@@ -65,6 +67,7 @@ mapping:
       ru: 6
       en: 7
       pl: 8
+      hu: 9
 
 # ── Boot initialisation ──────────────────────────────────────────────────────
 # Runs after all entities are available. Fetches translations for the saved

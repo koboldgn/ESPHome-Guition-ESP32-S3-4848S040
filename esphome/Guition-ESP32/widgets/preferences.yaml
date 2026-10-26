@@ -25,10 +25,11 @@
 #
 # ── ADDING A NEW LANGUAGE ────────────────────────────────────────────────────
 # 1. Copy any existing row in the t[][] table as a template and translate it.
-# 2. Increment the first dimension: t[9][25] → t[10][25].
-# 3. Add the language as a new option in the language_dropdown widget inside
-#    settings_page.yaml — the row index must match the dropdown option order
-#    (0-based, top-to-bottom).
+# 2. Increase the first dimension of t[][] and append one complete translation row.
+# 3. Add the language to language_dropdown in settings_page.yaml, all three
+#    mappings in settings_display.yaml, and the lookup bounds in
+#    settings_sensors.yaml. Keep each index consistent; add its flag image in
+#    widgets/image.yaml and img/flags/.
 # ─────────────────────────────────────────────────────────────────────────────
 
 
@@ -46,6 +47,7 @@
 #   6 = ru    Russian
 #   7 = en    English (US) ← default if index is out of range
 #   8 = pl    Polish
+#   9 = hu    Hungarian
 #
 # ── STRING INDEX (column number in the table) ────────────────────────────────
 #   Each column maps to one on-screen label.  To change a specific label for a
@@ -82,7 +84,7 @@ script:
     then:
       - lambda: |-
           // Rows: language index  Cols: string index (see mapping above)
-          static const char* const t[9][25] = {
+          static const char* const t[10][25] = {
 
             // ── de – German ────────────────────────────────────────────────
             { "Alarmanlage",       "Rollos",           "Ventilatoren",       "Beleuchtung",       "Szenen",
@@ -176,10 +178,18 @@ script:
               "Flip",              "Brak",             "Poka\u017c zdarzenia","Zegar G\u0142\u00f3wny","Standardowy",
               "Flip" },
 
+            // ── hu – Hungarian ─────────────────────────────────────────────
+            { "Riasztó",           "Árnyékolók",       "Ventilátorok",       "Világítás",         "Jelenetek",
+              "Személyek",         "5 napos előrejelzés","Eső esélye",       "Frissítés",
+              "Nyelv",             "Téma",             "Háttérvilágítás",    "Alvó mód (mp)",     "Óra",
+              "12 óra",            "24 óra",           "Hőmérséklet",        "Képernyővédő",      "Digitális",
+              "Lapozós",           "Ki",               "Naptáresemények",   "Főképernyő órája",  "Normál",
+              "Lapozós" },
+
           };
 
           int l = id(current_language);
-          if (l < 0 || l > 8) l = 7;  // default to en-US if out of range
+          if (l < 0 || l > 9) l = 7;  // default to en-US if out of range
 
           lv_label_set_text(id(alarm_panel_header),       t[l][0]);
           lv_label_set_text(id(covers_panel_header),      t[l][1]);
@@ -190,6 +200,7 @@ script:
           lv_label_set_text(id(forecast_title_lbl),       t[l][6]);
           lv_label_set_text(id(forecast_rain_lbl),        t[l][7]);
           lv_label_set_text(id(forecast_refresh_lbl),     t[l][8]);
+          lv_label_set_text(id(fc_day_0), l == 9 ? "Ma" : "${forecast_today_label}");
           lv_label_set_text(id(language_label),           t[l][9]);
           lv_label_set_text(id(theme_label),              t[l][10]);
           lv_label_set_text(id(display_backlight_label),  t[l][11]);
@@ -336,6 +347,8 @@ select:
       then:
         - delay: 400ms
         - script.execute: apply_ui_translations
+        - script.execute: time_update
+        - script.execute: screensaver_tick
 
 
 # ── Apply at boot ─────────────────────────────────────────────────────────────
