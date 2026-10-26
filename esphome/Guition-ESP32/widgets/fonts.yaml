@@ -1,42 +1,41 @@
-font:
-  - file: "Guition-ESP32/fonts/icons_v2.ttf"
-    id: icons_72
-    size: 72
-    bpp: 8
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_72
+  size: 72
+  bpp: 8
 
-  - file: "Guition-ESP32/fonts/icons_v2.ttf"
-    id: icons_90
-    size: 90
-    bpp: 8
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_90
+  size: 90
+  bpp: 8
 
-  - file: "Guition-ESP32/fonts/mdi.ttf"
-    id: mdi_72
-    size: 72
-    bpp: 8
+- file: "Guition-ESP32/fonts/mdi.ttf"
+  id: mdi_72
+  size: 72
+  bpp: 8
 
-  - file: "Guition-ESP32/fonts/mdi.ttf"
-    id: mdi_90
-    size: 90
-    bpp: 8
+- file: "Guition-ESP32/fonts/mdi.ttf"
+  id: mdi_90
+  size: 90
+  bpp: 8
 
-  - file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
-    id: mdi_icons_60
-    size: 60
-    bpp: 8
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_60
+  size: 60
+  bpp: 8
 
-  - file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
-    id: mdi_icons_72
-    size: 72
-    bpp: 8
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_72
+  size: 72
+  bpp: 8
 
-  - file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
-    id: mdi_icons_90
-    size: 90
-    bpp: 8
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_90
+  size: 90
+  bpp: 8
 
-  - file: "Guition-ESP32/fonts/fan_icons.ttf"
-    id: fan_icons_90
-    size: 90
-    bpp: 8
+- file: "Guition-ESP32/fonts/fan_icons.ttf"
+  id: fan_icons_90
+  size: 90
+  bpp: 8
 
 
