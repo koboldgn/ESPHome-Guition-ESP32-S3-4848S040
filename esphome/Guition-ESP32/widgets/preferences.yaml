@@ -78,13 +78,15 @@
 #   22  home_clock_style_lbl       Settings: "Home Clock" section heading
 #   23  home_std_lbl               Settings: home clock "Standard" option
 #   24  home_flip_lbl              Settings: home clock "Flip" option
+#   25  calendar_events_header     Home screen: "Next Events" heading
+#   26  screensaver_upcoming_lbl   Screensaver: "Upcoming" heading
 
 script:
   - id: apply_ui_translations
     then:
       - lambda: |-
           // Rows: language index  Cols: string index (see mapping above)
-          static const char* const t[10][25] = {
+          static const char* const t[10][27] = {
 
             // ── de – German ────────────────────────────────────────────────
             { "Alarmanlage",       "Rollos",           "Ventilatoren",       "Beleuchtung",       "Szenen",
@@ -92,7 +94,7 @@ script:
               "Sprache",           "Design",           "Helligkeit",         "Ruhemodus (Sek.)",  "Uhr",
               "12h",               "24h",              "Temperatur",         "Bildschirmschoner", "Digital",
               "Flip",              "Aus",              "Kalendereintr\u00e4ge","Startseiten-Uhr",  "Standard",
-              "Flip" },
+              "Flip",              "N\u00e4chste Events", "N\u00e4chste" },
 
             // ── es – Spanish ───────────────────────────────────────────────
             { "Panel de Alarma",   "Persianas",        "Ventiladores",       "Luces",             "Escenas",
@@ -100,7 +102,7 @@ script:
               "Idioma",            "Tema",             "Brillo",             "Reposo (seg)",      "Reloj",
               "12h",               "24h",              "Temperatura",        "Salvapantallas",    "Digital",
               "Flip",              "Ninguno",          "Mostrar eventos",    "Reloj Principal",   "Est\u00e1ndar",
-              "Flip" },
+              "Flip",              "Pr\u00f3ximos eventos", "Pr\u00f3ximo" },
 
             // ── fr – French ────────────────────────────────────────────────
             { "Panneau d'Alarme",  "Volets",           "Ventilateurs",       "Lumi\u00e8res",     "Sc\u00e8nes",
@@ -108,7 +110,7 @@ script:
               "Langue",            "Th\u00e8me",       "R\u00e9tro\u00e9clairage","Veille (sec)",  "Horloge",
               "12h",               "24h",              "Temp\u00e9rature",   "\u00c9cran de veille","Num\u00e9rique",
               "Flip",              "Aucun",            "Afficher \u00e9v\u00e9nements","Horloge Accueil","Standard",
-              "Flip" },
+              "Flip",              "Prochains \u00e9v\u00e9nements", "Suivant" },
 
             // ── en-GB – English (UK) ───────────────────────────────────────
             { "Alarm Panel",       "Cover Controls",   "Fan Controls",       "Light Controls",    "Scene Controls",
@@ -116,7 +118,7 @@ script:
               "Language",          "Theme",            "Backlight",          "Sleep Mode (sec)",  "Clock",
               "12h",               "24h",              "Temperature",        "Screensaver",       "Digital",
               "Flip",              "None",             "Show Calendar Events","Home Clock",        "Standard",
-              "Flip" },
+              "Flip",              "Next Events",       "Upcoming" },
 
             // ── it – Italian ───────────────────────────────────────────────
             { "Pannello Allarme",  "Tende",            "Ventilatori",        "Luci",              "Scene",
@@ -124,7 +126,7 @@ script:
               "Lingua",            "Tema",             "Luminosit\u00e0",    "Riposo (sec)",      "Orologio",
               "12h",               "24h",              "Temperatura",        "Salvaschermo",      "Digitale",
               "Flip",              "Nessuno",          "Mostra eventi",      "Orologio Home",     "Standard",
-              "Flip" },
+              "Flip",              "Prossimi eventi",   "Prossimo" },
 
             // ── pt – Portuguese ────────────────────────────────────────────
             { "Painel de Alarme",  "Persianas",        "Ventiladores",       "Luzes",             "Cenas",
@@ -132,7 +134,7 @@ script:
               "Idioma",            "Tema",             "Brilho",             "Repouso (seg)",     "Rel\u00f3gio",
               "12h",               "24h",              "Temperatura",        "Protetor de Tela",  "Digital",
               "Flip",              "Nenhum",           "Mostrar eventos",    "Rel\u00f3gio Inicial","Padr\u00e3o",
-              "Flip" },
+              "Flip",              "Pr\u00f3ximos eventos", "Pr\u00f3ximo" },
 
             // ── ru – Russian ───────────────────────────────────────────────
             // Non-ASCII characters are written as \uXXXX Unicode escapes.
@@ -160,7 +162,9 @@ script:
               "\u041f\u043e\u043a\u0430\u0437\u0430\u0442\u044c \u0441\u043e\u0431\u044b\u0442\u0438\u044f",
               "\u0427\u0430\u0441\u044b \u0413\u043b\u0430\u0432\u043d\u043e\u0439",
               "\u0421\u0442\u0430\u043d\u0434\u0430\u0440\u0442",
-              "\u0424\u043b\u0438\u043f" },
+              "\u0424\u043b\u0438\u043f",
+              "\u0411\u043b\u0438\u0436\u0430\u0439\u0448\u0438\u0435 \u0441\u043e\u0431\u044b\u0442\u0438\u044f",
+              "\u0414\u0430\u043b\u0435\u0435" },
 
             // ── en – English (US)
             { "Alarm Panel",       "Cover Controls",           "Fan Controls",       "Light Controls",            "Scene Controls",
@@ -168,7 +172,7 @@ script:
               "Language",          "Theme",            "Backlight",          "Sleep Mode (sec)",  "Clock",
               "12h",               "24h",              "Temperature",        "Screensaver",       "Digital",
               "Flip",              "None",             "Show Calendar Events","Home Clock",        "Standard",
-              "Flip" },
+              "Flip",              "Next Events",       "Upcoming" },
 
             // ── pl – Polish ────────────────────────────────────────────────
             { "Panel Alarmowy",    "Sterowanie Roletami", "Wentylatory",        "O\u015bwietlenie",  "Sceny",
@@ -176,7 +180,7 @@ script:
               "J\u0119zyk",        "Motyw",            "Pod\u015bwietlenie",  "U\u015bpienie (sek)","Zegar",
               "12h",               "24h",              "Temperatura",        "Wygaszacz",         "Cyfrowy",
               "Flip",              "Brak",             "Poka\u017c zdarzenia","Zegar G\u0142\u00f3wny","Standardowy",
-              "Flip" },
+              "Flip",              "Nadchodz\u0105ce wydarzenia", "Nadchodz\u0105ce" },
 
             // ── hu – Hungarian ─────────────────────────────────────────────
             { "Riasztó",           "Árnyékolók",       "Ventilátorok",       "Világítás",         "Jelenetek",
@@ -184,7 +188,7 @@ script:
               "Nyelv",             "Téma",             "Háttérvilágítás",    "Alvó mód (mp)",     "Óra",
               "12 óra",            "24 óra",           "Hőmérséklet",        "Képernyővédő",      "Digitális",
               "Lapozós",           "Ki",               "Naptáresemények",   "Főképernyő órája",  "Normál",
-              "Lapozós" },
+              "Lapozós",           "Következő események","Következő" },
 
           };
 
@@ -217,6 +221,8 @@ script:
           lv_label_set_text(id(home_clock_style_lbl),     t[l][22]);
           lv_label_set_text(id(home_std_lbl),             t[l][23]);
           lv_label_set_text(id(home_flip_lbl),            t[l][24]);
+          lv_label_set_text(id(calendar_header_label),    t[l][25]);
+          lv_label_set_text(id(ss_events_label),          t[l][26]);
 
 
 # ── English label defaults ────────────────────────────────────────────────────
@@ -335,6 +341,10 @@ substitutions:
   settings_screensaver_none_label:    "None"
   settings_home_clock_standard_label: "Standard"
   settings_show_calendar_label:       "Show Calendar Events"
+
+  # ── Calendar status labels ─────────────────────────────────────────────────────
+  calendar_events_header_label:       "Next Events"
+  screensaver_upcoming_label:          "Upcoming"
 
 
 # ── Language change hook ──────────────────────────────────────────────────────

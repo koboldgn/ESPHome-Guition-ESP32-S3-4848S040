@@ -731,7 +731,7 @@ lvgl:
                   align: TOP_LEFT
                   text_font: nunito_16
                   text_color: color_steel_blue
-                  text: "Next Events"
+                  text: "${calendar_events_header_label}"
 
               # header separator
               - obj:
@@ -775,7 +775,7 @@ lvgl:
                         width: 416
                         text_font: nunito_16
                         text_color: color_misty_blue
-                        long_mode: SCROLL_CIRCULAR
+                        long_mode: CLIP
                         text: " "
 
               # ── event 2 ──
@@ -805,7 +805,7 @@ lvgl:
                         width: 416
                         text_font: nunito_16
                         text_color: color_misty_blue
-                        long_mode: SCROLL_CIRCULAR
+                        long_mode: CLIP
                         text: " "
 
               # ── event 3 ──
@@ -835,7 +835,7 @@ lvgl:
                         width: 416
                         text_font: nunito_16
                         text_color: color_misty_blue
-                        long_mode: SCROLL_CIRCULAR
+                        long_mode: CLIP
                         text: " "
 
 

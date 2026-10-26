@@ -391,11 +391,12 @@ lvgl:
                       pad_all: 0
                   # Section label
                   - label:
+                      id: ss_events_label
                       align: TOP_MID
                       y: 10
                       text_font: nunito_16
                       text_color: color_steel_blue
-                      text: "Upcoming"
+                      text: "${screensaver_upcoming_label}"
                   # Event 1
                   - label:
                       id: ss_cal_event1_time
@@ -413,7 +414,7 @@ lvgl:
                       width: 420
                       text_font: nunito_18
                       text_color: color_misty_blue
-                      long_mode: SCROLL_CIRCULAR
+                      long_mode: CLIP
                       text: " "
                   # Event 2
                   - label:
@@ -432,7 +433,7 @@ lvgl:
                       width: 420
                       text_font: nunito_18
                       text_color: color_misty_blue
-                      long_mode: SCROLL_CIRCULAR
+                      long_mode: CLIP
                       text: " "
                   # Event 3
                   - label:
@@ -451,7 +452,7 @@ lvgl:
                       width: 420
                       text_font: nunito_18
                       text_color: color_misty_blue
-                      long_mode: SCROLL_CIRCULAR
+                      long_mode: CLIP
                       text: " "
 
       # ── Notification banner ────────────────────────────────────────────────
