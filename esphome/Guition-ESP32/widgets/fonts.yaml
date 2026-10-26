@@ -38,4 +38,84 @@
   size: 90
   bpp: 8
 
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_28
+  size: 28
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_36
+  size: 36
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_38
+  size: 38
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_48
+  size: 48
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_24
+  size: 24
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_40
+  size: 40
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_52
+  size: 52
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
+  id: mdi_icons_68
+  size: 68
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_16
+  size: 16
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_18
+  size: 18
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_20
+  size: 20
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_30
+  size: 30
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_48
+  size: 48
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_64
+  size: 64
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/MPLUSRounded1c-Regular.ttf"
+  id: montserrat_20
+  size: 20
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/gluqlo.ttf"
+  id: gluqlo_96
+  size: 96
+  bpp: 8
+
 
