@@ -1,0 +1,168 @@
+substitutions:
+  car_page_id: "car_page"
+  car_page_title: "Nissan Leaf"
+
+sensor:
+  - platform: homeassistant
+    id: car_battery_level
+    entity_id: "${car_battery_entity}"
+    on_value:
+      - lvgl.bar.update:
+          id: car_battery_bar
+          value: !lambda return x;
+      - lvgl.label.update:
+          id: car_battery_text
+          text: !lambda |-
+            char buf[16];
+            sprintf(buf, "%.0f%%", x);
+            return std::string(buf);
+
+  - platform: homeassistant
+    id: car_internal_temp
+    entity_id: "${car_temperature_entity}"
+    on_value:
+      - lvgl.label.update:
+          id: car_temp_text
+          text: !lambda |-
+            char buf[16];
+            sprintf(buf, "%.1f°C", x);
+            return std::string(buf);
+
+binary_sensor:
+  - platform: homeassistant
+    id: car_charging_status
+    entity_id: "${car_charging_entity}"
+    on_state:
+      - if:
+          condition:
+            binary_sensor.is_on: car_charging_status
+          then:
+            - lvgl.label.update:
+                id: car_charging_icon
+                text: "\U000F012C" # mdi:flash
+                text_color: color_green
+          else:
+            - lvgl.label.update:
+                id: car_charging_icon
+                text: ""
+
+lvgl:
+  pages:
+    - id: ${car_page_id}
+      bg_color: color_slate_blue_gray
+      widgets:
+        # Header
+        - label:
+            id: car_header
+            align: TOP_MID
+            y: 20
+            text_font: nunito_20
+            text_color: color_misty_blue
+            text: "${car_page_title}"
+
+        - obj:
+            align: TOP_MID
+            y: 48
+            width: 440
+            height: 1
+            bg_color: color_misty_blue
+            bg_opa: 20%
+            radius: 0
+
+        # Car Image
+        - img:
+            id: car_main_img
+            src: car_image
+            align: TOP_MID
+            y: 70
+
+        # Info Panel
+        - obj:
+            width: 400
+            height: 100
+            align: TOP_MID
+            y: 300
+            bg_opa: TRANSP
+            border_opa: TRANSP
+            layout:
+              type: FLEX
+              flex_flow: ROW
+              flex_align_main: SPACE_AROUND
+              flex_align_cross: CENTER
+            widgets:
+              # Temperature
+              - obj:
+                  width: 180
+                  height: 80
+                  bg_color: color_steel_blue
+                  bg_opa: 20%
+                  radius: 10
+                  widgets:
+                    - label:
+                        align: LEFT_MID
+                        x: 10
+                        text_font: icons_28
+                        text_color: color_steel_blue
+                        text: "\U0000e939" # temp icon
+                    - label:
+                        id: car_temp_text
+                        align: RIGHT_MID
+                        x: -10
+                        text_font: nunito_30
+                        text_color: color_misty_blue
+                        text: "--.-°C"
+
+              # Climate Control Button
+              - obj:
+                  width: 180
+                  height: 80
+                  bg_color: color_deep_orange
+                  bg_opa: 30%
+                  radius: 10
+                  clickable: true
+                  widgets:
+                    - label:
+                        align: CENTER
+                        text_font: icons_36
+                        text_color: color_misty_blue
+                        text: "\U0000e93b" # AC icon
+                  on_click:
+                    - homeassistant.service:
+                        service: switch.toggle # Or climate.turn_on/off if available
+                        data:
+                          entity_id: "${car_climate_switch_entity}"
+
+        # Battery Bar (Bottom)
+        - obj:
+            width: 440
+            height: 60
+            align: BOTTOM_MID
+            y: -100
+            bg_color: color_steel_blue
+            bg_opa: 20%
+            radius: 10
+            widgets:
+              - bar:
+                  id: car_battery_bar
+                  width: 320
+                  height: 20
+                  align: LEFT_MID
+                  x: 20
+                  range_from: 0
+                  range_to: 100
+                  bg_color: color_slate_blue_gray
+                  indicator:
+                    bg_color: color_green
+              - label:
+                  id: car_battery_text
+                  align: RIGHT_MID
+                  x: -20
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "--%"
+              - label:
+                  id: car_charging_icon
+                  align: LEFT_MID
+                  x: 350
+                  text_font: mdi_icons_24
+                  text: ""

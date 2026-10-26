@@ -180,6 +180,29 @@ lvgl:
                         animation: OUT_RIGHT
                         time: 300ms
 
+              # ── Settings tile — moved here from the bottom nav strip ───────
+              - button:
+                  id: settings_page_btn
+                  x: 305
+                  y: 124
+                  align: TOP_LEFT
+                  width: 100
+                  height: 100
+                  radius: 10
+                  bg_color: color_slate_blue_gray
+                  shadow_opa: TRANSP
+                  widgets:
+                    - label:
+                        align: CENTER
+                        text_color: color_steel_blue
+                        text_font: icons_36
+                        text: "${settings_icon}"
+                  on_press:
+                    - lvgl.page.show:
+                        id: settings_page
+                        animation: OUT_RIGHT
+                        time: 300ms
+
 
 # ── Compact layout: remove gaps left by disabled optional buttons ─────────────
 # Runs after fans (-200), shortcuts (-300), and covers (-200) have hidden
@@ -196,6 +219,7 @@ esphome:
             id(fans_page_btn),
             id(shortcuts_page_btn),
             id(covers_page_btn),
+            id(settings_page_btn),
           };
 
           // Slots available for optional items after the 2 fixed buttons
@@ -205,6 +229,7 @@ esphome:
             {305,  12},
             { 35, 124},
             {170, 124},
+            {305, 124},
           };
 
           int n = 0;

@@ -58,6 +58,8 @@ substitutions:
   ceiling_fan_font:          "mdi_icons_60"
   floor_fan:                 "\U000F0210"    # mdi:fan
   floor_fan_font:            "mdi_icons_60"
+  car:                        "\U000F15B5"    # mdi:car-electric
+  car_font:                   "mdi_icons_90"
 
   # ── mdi.ttf  (font id: mdi_90) — extra nav-icon options ──────────────────
   play_circle:               "\U000F040C"    # mdi:play-circle
