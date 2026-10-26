@@ -44,6 +44,16 @@
   bpp: 8
 
 - file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_24
+  size: 24
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_32
+  size: 32
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
   id: icons_36
   size: 36
   bpp: 8
@@ -99,13 +109,33 @@
   bpp: 8
 
 - file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_36
+  size: 36
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
+  id: nunito_44
+  size: 44
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
   id: nunito_48
   size: 48
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/gluqlo.ttf"
+  id: gluqlo_64
+  size: 64
   bpp: 8
 
 - file: "Guition-ESP32/fonts/Nunito-SemiBold.ttf"
   id: nunito_64
   size: 64
+  bpp: 8
+
+- file: "Guition-ESP32/fonts/MPLUSRounded1c-Regular.ttf"
+  id: mplus_16
+  size: 16
   bpp: 8
 
 - file: "Guition-ESP32/fonts/MPLUSRounded1c-Regular.ttf"
@@ -117,5 +147,4 @@
   id: gluqlo_96
   size: 96
   bpp: 8
-
 
