@@ -31,8 +31,8 @@ A complete, production-ready smart home dashboard for the **Guition ESP32-S3-484
 | **Vacuum** | Animated robot body, battery, state, start/pause/dock controls |
 | **Alarm Panel** | Disarm / Home / Away / Night / Vacation modes with PIN entry |
 | **Devices hub** | Navigation to Alarm, Media, Vacuum, HVAC, Fans, Shortcuts, and Covers; optional buttons (Fans, Shortcuts, Covers) are hidden and reordered automatically when all their slots are `sensor.disabled` |
-| **Settings** | Language (9 languages), colour theme, 12h/24h clock, °F/°C unit, backlight brightness, auto-sleep timer, screensaver style |
-| **Settings defaults** | Language: English (US) · Theme: Dark · Backlight: 100% · Sleep: 120 s · Clock: 12h · Temp: °F · Screensaver: Flip |
+| **Settings** | Language (10 languages), colour theme, 12h/24h clock, °F/°C unit, backlight brightness, auto-sleep timer, screensaver style |
+| **Settings defaults** | Language: Hungarian · Theme: Dark · Backlight: 100% · Sleep: 120 s · Clock: 12h · Temp: °C · Screensaver: Flip |
 | **Themes** | 6 built-in themes: Cherry Blossom, Dark, Espeon, Ocean, Paris, Patriotic |
 | **Navigation** | Persistent bottom nav bar (Home / Lights / Devices / Settings); entity detail pages hide the bar and show a back button |
 | **Multi-device** | Copy `main.yaml` and rename — each file is a fully independent device; `preferences.yaml` lets you rename pages and labels globally |

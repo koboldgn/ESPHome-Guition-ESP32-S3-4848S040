@@ -109,6 +109,7 @@ lvgl:
                         x: 240
                         width: 200
                         align: LEFT_MID
+                        selected_index: !lambda return id(current_language);
                         options:
                           - Deutsch         # de
                           - Español         # es
@@ -402,7 +403,7 @@ lvgl:
                   x: 20
                   y: 380
                   width: 440
-                  height: 80
+                  height: 150
                   align: TOP_LEFT
                   pad_all: 0
                   bg_color: color_steel_blue
@@ -415,16 +416,18 @@ lvgl:
                     - label:
                         id: clock_format_label
                         x: 20
-                        align: LEFT_MID
+                        y: 8
+                        align: TOP_LEFT
                         text_font: nunito_20
                         text_color: color_misty_blue
                         text: "${settings_clock_label}"
                     - button:
                         id: clock_12h_btn
                         x: 230
+                        y: 42
                         width: 90
                         height: 50
-                        align: LEFT_MID
+                        align: TOP_LEFT
                         bg_color: color_steel_blue
                         shadow_opa: TRANSP
                         border_opa: TRANSP
@@ -440,19 +443,15 @@ lvgl:
                           - globals.set:
                               id: time_format
                               value: '0'
+                          - script.execute: apply_theme
                           - script.execute: time_update
-                          - lvgl.button.update:
-                              id: clock_12h_btn
-                              bg_color: color_misty_blue
-                          - lvgl.button.update:
-                              id: clock_24h_btn
-                              bg_color: color_steel_blue
                     - button:
                         id: clock_24h_btn
                         x: 330
+                        y: 42
                         width: 90
                         height: 50
-                        align: LEFT_MID
+                        align: TOP_LEFT
                         bg_color: color_steel_blue
                         shadow_opa: TRANSP
                         border_opa: TRANSP
@@ -468,21 +467,16 @@ lvgl:
                           - globals.set:
                               id: time_format
                               value: '1'
+                          - script.execute: apply_theme
                           - script.execute: time_update
-                          - lvgl.button.update:
-                              id: clock_12h_btn
-                              bg_color: color_steel_blue
-                          - lvgl.button.update:
-                              id: clock_24h_btn
-                              bg_color: color_misty_blue
 
               # ── Temperature unit ──────────────────────────────────────────
               - obj:
                   id: temp_unit_bg
                   x: 20
-                  y: 470
+                  y: 540
                   width: 440
-                  height: 80
+                  height: 150
                   align: TOP_LEFT
                   pad_all: 0
                   bg_color: color_steel_blue
@@ -495,16 +489,18 @@ lvgl:
                     - label:
                         id: temp_unit_label
                         x: 20
-                        align: LEFT_MID
+                        y: 8
+                        align: TOP_LEFT
                         text_font: nunito_20
                         text_color: color_misty_blue
                         text: "${settings_temperature_label}"
                     - button:
                         id: temp_f_btn
                         x: 230
+                        y: 42
                         width: 90
                         height: 50
-                        align: LEFT_MID
+                        align: TOP_LEFT
                         bg_color: color_steel_blue
                         shadow_opa: TRANSP
                         border_opa: TRANSP
@@ -520,18 +516,15 @@ lvgl:
                           - globals.set:
                               id: temp_unit
                               value: '0'
-                          - lvgl.button.update:
-                              id: temp_f_btn
-                              bg_color: color_misty_blue
-                          - lvgl.button.update:
-                              id: temp_c_btn
-                              bg_color: color_steel_blue
+                          - script.execute: apply_theme
+                          - script.execute: update_weather_temperature
                     - button:
                         id: temp_c_btn
                         x: 330
+                        y: 42
                         width: 90
                         height: 50
-                        align: LEFT_MID
+                        align: TOP_LEFT
                         bg_color: color_steel_blue
                         shadow_opa: TRANSP
                         border_opa: TRANSP
@@ -547,20 +540,16 @@ lvgl:
                           - globals.set:
                               id: temp_unit
                               value: '1'
-                          - lvgl.button.update:
-                              id: temp_f_btn
-                              bg_color: color_steel_blue
-                          - lvgl.button.update:
-                              id: temp_c_btn
-                              bg_color: color_misty_blue
+                          - script.execute: apply_theme
+                          - script.execute: update_weather_temperature
 
               # ── Screensaver clock style ────────────────────────────────────
               - obj:
                   id: screensaver_style_bg
                   x: 20
-                  y: 560
+                  y: 700
                   width: 440
-                  height: 130
+                  height: 150
                   align: TOP_LEFT
                   pad_all: 0
                   bg_color: color_steel_blue
@@ -573,15 +562,15 @@ lvgl:
                     - label:
                         id: screensaver_style_label
                         x: 20
-                        y: 27
+                        y: 8
                         align: TOP_LEFT
                         text_font: nunito_20
                         text_color: color_misty_blue
                         text: "${settings_screensaver_label}"
                     - button:
                         id: ss_digital_btn
-                        x: 148
-                        y: 15
+                        x: 164
+                        y: 42
                         width: 80
                         height: 50
                         align: TOP_LEFT
@@ -600,19 +589,11 @@ lvgl:
                           - globals.set:
                               id: screensaver_style
                               value: '0'
-                          - lvgl.button.update:
-                              id: ss_digital_btn
-                              bg_color: color_misty_blue
-                          - lvgl.button.update:
-                              id: ss_analog_btn
-                              bg_color: color_steel_blue
-                          - lvgl.button.update:
-                              id: ss_none_btn
-                              bg_color: color_steel_blue
+                          - script.execute: apply_theme
                     - button:
                         id: ss_analog_btn
-                        x: 236
-                        y: 15
+                        x: 252
+                        y: 42
                         width: 80
                         height: 50
                         align: TOP_LEFT
@@ -631,19 +612,11 @@ lvgl:
                           - globals.set:
                               id: screensaver_style
                               value: '1'
-                          - lvgl.button.update:
-                              id: ss_digital_btn
-                              bg_color: color_steel_blue
-                          - lvgl.button.update:
-                              id: ss_analog_btn
-                              bg_color: color_misty_blue
-                          - lvgl.button.update:
-                              id: ss_none_btn
-                              bg_color: color_steel_blue
+                          - script.execute: apply_theme
                     - button:
                         id: ss_none_btn
-                        x: 324
-                        y: 15
+                        x: 340
+                        y: 42
                         width: 80
                         height: 50
                         align: TOP_LEFT
@@ -662,19 +635,11 @@ lvgl:
                           - globals.set:
                               id: screensaver_style
                               value: '2'
-                          - lvgl.button.update:
-                              id: ss_digital_btn
-                              bg_color: color_steel_blue
-                          - lvgl.button.update:
-                              id: ss_analog_btn
-                              bg_color: color_steel_blue
-                          - lvgl.button.update:
-                              id: ss_none_btn
-                              bg_color: color_misty_blue
+                          - script.execute: apply_theme
                     - checkbox:
                         id: ss_events_checkbox
-                        x: 148
-                        y: 90
+                        x: 20
+                        y: 106
                         align: TOP_LEFT
                         text: "${settings_show_calendar_label}"
                         text_font: nunito_16
@@ -688,9 +653,9 @@ lvgl:
               - obj:
                   id: home_clock_style_bg
                   x: 20
-                  y: 700
+                  y: 860
                   width: 440
-                  height: 80
+                  height: 150
                   align: TOP_LEFT
                   pad_all: 0
                   bg_color: color_steel_blue
@@ -703,16 +668,16 @@ lvgl:
                     - label:
                         id: home_clock_style_lbl
                         x: 20
-                        y: 27
+                        y: 8
                         align: TOP_LEFT
                         text_font: nunito_20
                         text_color: color_misty_blue
                         text: "${settings_home_clock_label}"
                     - button:
                         id: home_std_btn
-                        x: 148
-                        y: 15
-                        width: 100
+                        x: 230
+                        y: 42
+                        width: 90
                         height: 50
                         align: TOP_LEFT
                         bg_color: color_misty_blue
@@ -730,20 +695,12 @@ lvgl:
                           - globals.set:
                               id: home_clock_style
                               value: '0'
-                          - lvgl.button.update:
-                              id: home_std_btn
-                              bg_color: color_misty_blue
-                          - lvgl.button.update:
-                              id: home_flip_btn
-                              bg_color: color_steel_blue
-                          - lvgl.widget.show: display_time
-                          - lvgl.widget.hide: home_flip_panels
-                          - lvgl.widget.hide: home_flip_seam
+                          - script.execute: apply_theme
                     - button:
                         id: home_flip_btn
-                        x: 256
-                        y: 15
-                        width: 100
+                        x: 330
+                        y: 42
+                        width: 90
                         height: 50
                         align: TOP_LEFT
                         bg_color: color_steel_blue
@@ -761,12 +718,4 @@ lvgl:
                           - globals.set:
                               id: home_clock_style
                               value: '1'
-                          - lvgl.button.update:
-                              id: home_std_btn
-                              bg_color: color_steel_blue
-                          - lvgl.button.update:
-                              id: home_flip_btn
-                              bg_color: color_misty_blue
-                          - lvgl.widget.hide: display_time
-                          - lvgl.widget.show: home_flip_panels
-                          - lvgl.widget.show: home_flip_seam
+                          - script.execute: apply_theme

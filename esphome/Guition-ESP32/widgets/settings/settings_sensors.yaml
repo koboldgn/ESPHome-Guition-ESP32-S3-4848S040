@@ -15,7 +15,7 @@ text_sensor:
     on_value:
       - lambda: |-
           std::string lang_code = x;
-          int lang_index = 7; // default: English (US)
+          int lang_index = 9; // default: Hungarian
           for (int i = 0; i <= 9; i++) {
             if (id(flag_icon_mapping_name)[i] == lang_code) {
               lang_index = i;
@@ -27,7 +27,7 @@ text_sensor:
       - lvgl.dropdown.update:
           id: language_dropdown
           selected_index: !lambda |-
-            int lang_index = 7;
+            int lang_index = 9;
             for (int i = 0; i <= 9; i++) {
               if (id(flag_icon_mapping_name)[i] == x) {
                 lang_index = i;
@@ -39,7 +39,7 @@ text_sensor:
       - lvgl.image.update:
           id: flag_language_image
           src: !lambda |-
-            int lang_index = 7;
+            int lang_index = 9;
             for (int i = 0; i <= 9; i++) {
               if (id(flag_icon_mapping_name)[i] == x) {
                 lang_index = i;

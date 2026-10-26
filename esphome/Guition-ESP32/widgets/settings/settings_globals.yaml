@@ -28,19 +28,19 @@ globals:
   - id: screensaver_show_calendar
     type: bool
     restore_value: true
-    initial_value: 'false'
+    initial_value: 'true'
 
   # Clock display format  0 = 12h (AM/PM)   1 = 24h
   - id: time_format
     type: int
     restore_value: true
-    initial_value: '0'
+    initial_value: '1'
 
   # Temperature unit  0 = °F   1 = °C
   - id: temp_unit
     type: int
     restore_value: true
-    initial_value: '0'
+    initial_value: '1'
 
   # Display auto-sleep timeout index (maps to seconds via the dropdown)
   - id: display_timeout
@@ -52,7 +52,7 @@ globals:
   - id: current_language
     type: int
     restore_value: yes
-    initial_value: '7'    # 7 = English (US)
+    initial_value: '9'    # 9 = Hungarian
 
   # Current colour theme index
   # 0 = Cherry Blossom  1 = Dark  2 = Espeon  3 = Ocean  4 = Paris  5 = Patriotic

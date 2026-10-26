@@ -413,7 +413,7 @@ lvgl:
                       width: 420
                       text_font: nunito_18
                       text_color: color_misty_blue
-                      long_mode: CLIP
+                      long_mode: SCROLL_CIRCULAR
                       text: " "
                   # Event 2
                   - label:
@@ -432,7 +432,7 @@ lvgl:
                       width: 420
                       text_font: nunito_18
                       text_color: color_misty_blue
-                      long_mode: CLIP
+                      long_mode: SCROLL_CIRCULAR
                       text: " "
                   # Event 3
                   - label:
@@ -451,7 +451,7 @@ lvgl:
                       width: 420
                       text_font: nunito_18
                       text_color: color_misty_blue
-                      long_mode: CLIP
+                      long_mode: SCROLL_CIRCULAR
                       text: " "
 
       # ── Notification banner ────────────────────────────────────────────────

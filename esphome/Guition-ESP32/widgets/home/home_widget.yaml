@@ -76,14 +76,7 @@ sensor:
     attribute: temperature
     on_value:
       then:
-        - lvgl.label.update:
-            id: weather_temperature
-            text: !lambda |-
-              static char buf[10];
-              float t = id(weather_temp).state;
-              if (id(temp_unit) != 1) t = t * 9.0f / 5.0f + 32.0f;
-              snprintf(buf, sizeof(buf), "%.0f°", t);
-              return buf;
+        - script.execute: update_weather_temperature
 
   # Indoor temperature — kept for HVAC climate component
   - platform: homeassistant
@@ -92,6 +85,14 @@ sensor:
 
 
 text_sensor:
+  - platform: homeassistant
+    id: weather_temperature_unit
+    entity_id: "${weather_entity}"
+    attribute: temperature_unit
+    on_value:
+      then:
+        - script.execute: update_weather_temperature
+
   # Person presence sensors
   - platform: homeassistant
     id: person_state_1
@@ -862,6 +863,36 @@ time:
 
 script:
 
+  - id: update_weather_temperature
+    then:
+      - lvgl.label.update:
+          id: weather_temperature
+          text: !lambda |-
+            static char buf[12];
+            if (!id(weather_temp).has_state() ||
+                !id(weather_temperature_unit).has_state()) {
+              return std::string("--°");
+            }
+
+            std::string source_unit = id(weather_temperature_unit).state;
+            bool source_is_celsius = source_unit == "°C" || source_unit == "C";
+            bool source_is_fahrenheit = source_unit == "°F" || source_unit == "F";
+            if (!source_is_celsius && !source_is_fahrenheit) {
+              ESP_LOGW("WEATHER", "Unsupported temperature unit from Home Assistant: %s",
+                       source_unit.c_str());
+              return std::string("--°");
+            }
+
+            float temperature = id(weather_temp).state;
+            bool display_celsius = id(temp_unit) == 1;
+            if (source_is_celsius && !display_celsius) {
+              temperature = temperature * 9.0f / 5.0f + 32.0f;
+            } else if (source_is_fahrenheit && display_celsius) {
+              temperature = (temperature - 32.0f) * 5.0f / 9.0f;
+            }
+            snprintf(buf, sizeof(buf), "%.0f°", temperature);
+            return buf;
+
   - id: time_update
     then:
       # Skip all LVGL writes while the renderer is paused (e.g. during OTA).
@@ -909,7 +940,7 @@ script:
                   static char date_buf[32];
                   auto now = id(homeassistant_time).now();
                   int lang = id(current_language);
-                  if (lang < 0 || lang > 9) lang = 7;
+                  if (lang < 0 || lang > 9) lang = 9;
                   static const char* days[10][7] = {
                     {"So","Mo","Di","Mi","Do","Fr","Sa"},
                     {"dom","lun","mar","mié","jue","vie","sáb"},
@@ -990,7 +1021,7 @@ script:
                   static char buf[40];
                   auto now = id(homeassistant_time).now();
                   int lang = id(current_language);
-                  if (lang < 0 || lang > 9) lang = 7;
+                  if (lang < 0 || lang > 9) lang = 9;
                   static const char* days[10][7] = {
                     {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
                     {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
@@ -1084,7 +1115,7 @@ script:
             static char buf[40];
             auto now = id(homeassistant_time).now();
             int lang = id(current_language);
-            if (lang < 0 || lang > 9) lang = 7;
+            if (lang < 0 || lang > 9) lang = 9;
             static const char* days[10][7] = {
               {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
               {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
@@ -1125,7 +1156,7 @@ script:
             std::string e = id(cal_end_1).state;
             if (s.empty()) return std::string(" ");
             int lang = id(current_language);
-            if (lang < 0 || lang > 9) lang = 7;
+            if (lang < 0 || lang > 9) lang = 9;
             static const char* days[10][7] = {
               {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
               {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
@@ -1158,11 +1189,18 @@ script:
               r = strptime(s.c_str(), "%Y-%m-%dT%H:%M:%S%z", &ts);
               if (!r) { ts = {}; r = strptime(s.c_str(), "%Y-%m-%dT%H:%M:%S", &ts); }
               if (!r) { ts = {}; r = strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &ts); }
+              if (!r) { ts = {}; r = strptime(s.c_str(), "%Y-%m-%d %H:%M", &ts); }
             }
             if (!r) return std::string(" ");
             char buf[64];
             if (all_day) {
-              snprintf(buf, sizeof(buf), "%s, %s %d : all day", days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday);
+              if (lang == 9) {
+                snprintf(buf, sizeof(buf), "%02d.%02d.",
+                  ts.tm_mon + 1, ts.tm_mday);
+              } else {
+                snprintf(buf, sizeof(buf), "%s, %s %d : all day",
+                  days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday);
+              }
             } else {
               int hs = (ts.tm_hour % 12 == 0) ? 12 : ts.tm_hour % 12;
               struct tm te = {};
@@ -1171,22 +1209,54 @@ script:
                 const char *re = strptime(e.c_str(), "%Y-%m-%dT%H:%M:%S%z", &te);
                 if (!re) { te = {}; re = strptime(e.c_str(), "%Y-%m-%dT%H:%M:%S", &te); }
                 if (!re) { te = {}; re = strptime(e.c_str(), "%Y-%m-%d %H:%M:%S", &te); }
+                if (!re) { te = {}; re = strptime(e.c_str(), "%Y-%m-%d %H:%M", &te); }
                 has_end = (re != nullptr);
               }
               if (!has_end) {
-                snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d", days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday, hs, ts.tm_min);
+                if (lang == 9) {
+                  snprintf(buf, sizeof(buf), "%02d.%02d. %02d:%02d",
+                    ts.tm_mon + 1, ts.tm_mday, ts.tm_hour, ts.tm_min);
+                } else {
+                  snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d",
+                    days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday, hs, ts.tm_min);
+                }
               } else {
                 int he = (te.tm_hour % 12 == 0) ? 12 : te.tm_hour % 12;
-                snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d-%d:%02d%s",
-                  days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday,
-                  hs, ts.tm_min, he, te.tm_min, (te.tm_hour >= 12) ? "PM" : "AM");
+                if (lang == 9) {
+                  snprintf(buf, sizeof(buf), "%02d.%02d. %02d:%02d",
+                    ts.tm_mon + 1, ts.tm_mday, ts.tm_hour, ts.tm_min);
+                } else {
+                  snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d-%d:%02d%s",
+                    days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday,
+                    hs, ts.tm_min, he, te.tm_min, (te.tm_hour >= 12) ? "PM" : "AM");
+                }
               }
             }
+            if (lang == 9) return std::string(" ");
             return std::string(buf);
       - lvgl.label.update:
           id: ss_cal_event1_title
           text: !lambda |-
-            return id(cal_title_1).state.empty() ? std::string(" ") : id(cal_title_1).state;
+            std::string title = id(cal_title_1).state;
+            std::string start = id(cal_start_1).state;
+            if (title.empty() || start.empty()) return std::string(" ");
+            int lang = id(current_language);
+            if (lang != 9) return title;
+            struct tm ts = {};
+            const char *r = strptime(start.c_str(), "%Y-%m-%dT%H:%M:%S%z", &ts);
+            if (!r) { ts = {}; r = strptime(start.c_str(), "%Y-%m-%dT%H:%M:%S", &ts); }
+            if (!r) { ts = {}; r = strptime(start.c_str(), "%Y-%m-%d %H:%M:%S", &ts); }
+            if (!r) { ts = {}; r = strptime(start.c_str(), "%Y-%m-%d %H:%M", &ts); }
+            if (!r) return title;
+            char event_line[160];
+            if (start.size() <= 10) {
+              snprintf(event_line, sizeof(event_line), "%02d.%02d. - %s",
+                ts.tm_mon + 1, ts.tm_mday, title.c_str());
+            } else {
+              snprintf(event_line, sizeof(event_line), "%02d.%02d. %02d:%02d - %s",
+                ts.tm_mon + 1, ts.tm_mday, ts.tm_hour, ts.tm_min, title.c_str());
+            }
+            return std::string(event_line);
       - lvgl.label.update:
           id: ss_cal_event2_time
           text: !lambda |-
@@ -1194,7 +1264,7 @@ script:
             std::string e = id(cal_end_2).state;
             if (s.empty()) return std::string(" ");
             int lang = id(current_language);
-            if (lang < 0 || lang > 9) lang = 7;
+            if (lang < 0 || lang > 9) lang = 9;
             static const char* days[10][7] = {
               {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
               {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
@@ -1227,11 +1297,18 @@ script:
               r = strptime(s.c_str(), "%Y-%m-%dT%H:%M:%S%z", &ts);
               if (!r) { ts = {}; r = strptime(s.c_str(), "%Y-%m-%dT%H:%M:%S", &ts); }
               if (!r) { ts = {}; r = strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &ts); }
+              if (!r) { ts = {}; r = strptime(s.c_str(), "%Y-%m-%d %H:%M", &ts); }
             }
             if (!r) return std::string(" ");
             char buf[64];
             if (all_day) {
-              snprintf(buf, sizeof(buf), "%s, %s %d : all day", days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday);
+              if (lang == 9) {
+                snprintf(buf, sizeof(buf), "%02d.%02d.",
+                  ts.tm_mon + 1, ts.tm_mday);
+              } else {
+                snprintf(buf, sizeof(buf), "%s, %s %d : all day",
+                  days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday);
+              }
             } else {
               int hs = (ts.tm_hour % 12 == 0) ? 12 : ts.tm_hour % 12;
               struct tm te = {};
@@ -1240,22 +1317,54 @@ script:
                 const char *re = strptime(e.c_str(), "%Y-%m-%dT%H:%M:%S%z", &te);
                 if (!re) { te = {}; re = strptime(e.c_str(), "%Y-%m-%dT%H:%M:%S", &te); }
                 if (!re) { te = {}; re = strptime(e.c_str(), "%Y-%m-%d %H:%M:%S", &te); }
+                if (!re) { te = {}; re = strptime(e.c_str(), "%Y-%m-%d %H:%M", &te); }
                 has_end = (re != nullptr);
               }
               if (!has_end) {
-                snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d", days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday, hs, ts.tm_min);
+                if (lang == 9) {
+                  snprintf(buf, sizeof(buf), "%02d.%02d. %02d:%02d",
+                    ts.tm_mon + 1, ts.tm_mday, ts.tm_hour, ts.tm_min);
+                } else {
+                  snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d",
+                    days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday, hs, ts.tm_min);
+                }
               } else {
                 int he = (te.tm_hour % 12 == 0) ? 12 : te.tm_hour % 12;
-                snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d-%d:%02d%s",
-                  days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday,
-                  hs, ts.tm_min, he, te.tm_min, (te.tm_hour >= 12) ? "PM" : "AM");
+                if (lang == 9) {
+                  snprintf(buf, sizeof(buf), "%02d.%02d. %02d:%02d",
+                    ts.tm_mon + 1, ts.tm_mday, ts.tm_hour, ts.tm_min);
+                } else {
+                  snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d-%d:%02d%s",
+                    days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday,
+                    hs, ts.tm_min, he, te.tm_min, (te.tm_hour >= 12) ? "PM" : "AM");
+                }
               }
             }
+            if (lang == 9) return std::string(" ");
             return std::string(buf);
       - lvgl.label.update:
           id: ss_cal_event2_title
           text: !lambda |-
-            return id(cal_title_2).state.empty() ? std::string(" ") : id(cal_title_2).state;
+            std::string title = id(cal_title_2).state;
+            std::string start = id(cal_start_2).state;
+            if (title.empty() || start.empty()) return std::string(" ");
+            int lang = id(current_language);
+            if (lang != 9) return title;
+            struct tm ts = {};
+            const char *r = strptime(start.c_str(), "%Y-%m-%dT%H:%M:%S%z", &ts);
+            if (!r) { ts = {}; r = strptime(start.c_str(), "%Y-%m-%dT%H:%M:%S", &ts); }
+            if (!r) { ts = {}; r = strptime(start.c_str(), "%Y-%m-%d %H:%M:%S", &ts); }
+            if (!r) { ts = {}; r = strptime(start.c_str(), "%Y-%m-%d %H:%M", &ts); }
+            if (!r) return title;
+            char event_line[160];
+            if (start.size() <= 10) {
+              snprintf(event_line, sizeof(event_line), "%02d.%02d. - %s",
+                ts.tm_mon + 1, ts.tm_mday, title.c_str());
+            } else {
+              snprintf(event_line, sizeof(event_line), "%02d.%02d. %02d:%02d - %s",
+                ts.tm_mon + 1, ts.tm_mday, ts.tm_hour, ts.tm_min, title.c_str());
+            }
+            return std::string(event_line);
       - lvgl.label.update:
           id: ss_cal_event3_time
           text: !lambda |-
@@ -1263,7 +1372,7 @@ script:
             std::string e = id(cal_end_3).state;
             if (s.empty()) return std::string(" ");
             int lang = id(current_language);
-            if (lang < 0 || lang > 9) lang = 7;
+            if (lang < 0 || lang > 9) lang = 9;
             static const char* days[10][7] = {
               {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
               {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
@@ -1296,11 +1405,18 @@ script:
               r = strptime(s.c_str(), "%Y-%m-%dT%H:%M:%S%z", &ts);
               if (!r) { ts = {}; r = strptime(s.c_str(), "%Y-%m-%dT%H:%M:%S", &ts); }
               if (!r) { ts = {}; r = strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &ts); }
+              if (!r) { ts = {}; r = strptime(s.c_str(), "%Y-%m-%d %H:%M", &ts); }
             }
             if (!r) return std::string(" ");
             char buf[64];
             if (all_day) {
-              snprintf(buf, sizeof(buf), "%s, %s %d : all day", days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday);
+              if (lang == 9) {
+                snprintf(buf, sizeof(buf), "%02d.%02d.",
+                  ts.tm_mon + 1, ts.tm_mday);
+              } else {
+                snprintf(buf, sizeof(buf), "%s, %s %d : all day",
+                  days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday);
+              }
             } else {
               int hs = (ts.tm_hour % 12 == 0) ? 12 : ts.tm_hour % 12;
               struct tm te = {};
@@ -1309,22 +1425,54 @@ script:
                 const char *re = strptime(e.c_str(), "%Y-%m-%dT%H:%M:%S%z", &te);
                 if (!re) { te = {}; re = strptime(e.c_str(), "%Y-%m-%dT%H:%M:%S", &te); }
                 if (!re) { te = {}; re = strptime(e.c_str(), "%Y-%m-%d %H:%M:%S", &te); }
+                if (!re) { te = {}; re = strptime(e.c_str(), "%Y-%m-%d %H:%M", &te); }
                 has_end = (re != nullptr);
               }
               if (!has_end) {
-                snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d", days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday, hs, ts.tm_min);
+                if (lang == 9) {
+                  snprintf(buf, sizeof(buf), "%02d.%02d. %02d:%02d",
+                    ts.tm_mon + 1, ts.tm_mday, ts.tm_hour, ts.tm_min);
+                } else {
+                  snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d",
+                    days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday, hs, ts.tm_min);
+                }
               } else {
                 int he = (te.tm_hour % 12 == 0) ? 12 : te.tm_hour % 12;
-                snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d-%d:%02d%s",
-                  days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday,
-                  hs, ts.tm_min, he, te.tm_min, (te.tm_hour >= 12) ? "PM" : "AM");
+                if (lang == 9) {
+                  snprintf(buf, sizeof(buf), "%02d.%02d. %02d:%02d",
+                    ts.tm_mon + 1, ts.tm_mday, ts.tm_hour, ts.tm_min);
+                } else {
+                  snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d-%d:%02d%s",
+                    days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday,
+                    hs, ts.tm_min, he, te.tm_min, (te.tm_hour >= 12) ? "PM" : "AM");
+                }
               }
             }
+            if (lang == 9) return std::string(" ");
             return std::string(buf);
       - lvgl.label.update:
           id: ss_cal_event3_title
           text: !lambda |-
-            return id(cal_title_3).state.empty() ? std::string(" ") : id(cal_title_3).state;
+            std::string title = id(cal_title_3).state;
+            std::string start = id(cal_start_3).state;
+            if (title.empty() || start.empty()) return std::string(" ");
+            int lang = id(current_language);
+            if (lang != 9) return title;
+            struct tm ts = {};
+            const char *r = strptime(start.c_str(), "%Y-%m-%dT%H:%M:%S%z", &ts);
+            if (!r) { ts = {}; r = strptime(start.c_str(), "%Y-%m-%dT%H:%M:%S", &ts); }
+            if (!r) { ts = {}; r = strptime(start.c_str(), "%Y-%m-%d %H:%M:%S", &ts); }
+            if (!r) { ts = {}; r = strptime(start.c_str(), "%Y-%m-%d %H:%M", &ts); }
+            if (!r) return title;
+            char event_line[160];
+            if (start.size() <= 10) {
+              snprintf(event_line, sizeof(event_line), "%02d.%02d. - %s",
+                ts.tm_mon + 1, ts.tm_mday, title.c_str());
+            } else {
+              snprintf(event_line, sizeof(event_line), "%02d.%02d. %02d:%02d - %s",
+                ts.tm_mon + 1, ts.tm_mday, ts.tm_hour, ts.tm_min, title.c_str());
+            }
+            return std::string(event_line);
 
   - id: weather_get_and_set_translated_state
     parameters:
@@ -1432,10 +1580,11 @@ script:
             const char *r = strptime(s.c_str(), "%Y-%m-%dT%H:%M:%S%z", &t);
             if (!r) { t = {}; r = strptime(s.c_str(), "%Y-%m-%dT%H:%M:%S", &t); }
             if (!r) { t = {}; r = strptime(s.c_str(), "%Y-%m-%d %H:%M:%S", &t); }
+            if (!r) { t = {}; r = strptime(s.c_str(), "%Y-%m-%d %H:%M", &t); }
             return r != nullptr;
           };
           int lang = id(current_language);
-          if (lang < 0 || lang > 9) lang = 7;
+          if (lang < 0 || lang > 9) lang = 9;
           static const char* days[10][7] = {
             {"Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"},
             {"domingo","lunes","martes","miércoles","jueves","viernes","sábado"},
@@ -1490,24 +1639,50 @@ script:
             }
             char buf[80];
             if (all_day) {
-              snprintf(buf, sizeof(buf), "%s, %s %d : all day",
-                days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday);
+              if (lang == 9) {
+                snprintf(buf, sizeof(buf), "%02d.%02d.",
+                  ts.tm_mon + 1, ts.tm_mday);
+              } else {
+                snprintf(buf, sizeof(buf), "%s, %s %d : all day",
+                  days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday);
+              }
             } else {
               int hs = (ts.tm_hour % 12 == 0) ? 12 : ts.tm_hour % 12;
               bool has_end = !ev.end_t.empty() && ev.end_t.size() > 10 &&
                 parse_tm(ev.end_t, te, false);
               if (!has_end) {
-                snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d",
-                  days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday, hs, ts.tm_min);
+                if (lang == 9) {
+                  snprintf(buf, sizeof(buf), "%02d.%02d. %02d:%02d",
+                    ts.tm_mon + 1, ts.tm_mday, ts.tm_hour, ts.tm_min);
+                } else {
+                  snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d",
+                    days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday, hs, ts.tm_min);
+                }
               } else {
                 int he = (te.tm_hour % 12 == 0) ? 12 : te.tm_hour % 12;
-                snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d-%d:%02d%s",
-                  days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday,
-                  hs, ts.tm_min, he, te.tm_min, (te.tm_hour >= 12) ? "PM" : "AM");
+                if (lang == 9) {
+                  snprintf(buf, sizeof(buf), "%02d.%02d. %02d:%02d",
+                    ts.tm_mon + 1, ts.tm_mday, ts.tm_hour, ts.tm_min);
+                } else {
+                  snprintf(buf, sizeof(buf), "%s, %s %d : %d:%02d-%d:%02d%s",
+                    days[lang][ts.tm_wday], months[lang][ts.tm_mon], ts.tm_mday,
+                    hs, ts.tm_min, he, te.tm_min, (te.tm_hour >= 12) ? "PM" : "AM");
+                }
               }
             }
-            lv_label_set_text(dt_labels[i], buf);
-            lv_label_set_text(title_labels[i], ev.title.empty() ? " " : ev.title.c_str());
+            if (lang == 9) {
+              char event_line[160];
+              if (ev.title.empty()) {
+                snprintf(event_line, sizeof(event_line), "%s", buf);
+              } else {
+                snprintf(event_line, sizeof(event_line), "%s - %s", buf, ev.title.c_str());
+              }
+              lv_label_set_text(dt_labels[i], " ");
+              lv_label_set_text(title_labels[i], event_line);
+            } else {
+              lv_label_set_text(dt_labels[i], buf);
+              lv_label_set_text(title_labels[i], ev.title.empty() ? " " : ev.title.c_str());
+            }
           }
 
 select:
