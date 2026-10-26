@@ -142,9 +142,6 @@ substitutions:
   car_temperature_entity: "sensor.garazs_lefety_internal_temperature"
   car_climate_switch_entity: "switch.garazs_lefety_climate_control"
 
-  hvac_entity: "sensor.disabled"
-  thermostat_entity: "climate.haloszoba_futes_panel_gazkazan"
-
 
 
   # ── 6 │ LIGHTS  (up to 6 slots) ──────────────────────────────────────────────
@@ -383,14 +380,8 @@ packages:
 
   loading_page:       !include Guition-ESP32/widgets/loading_page.yaml
   car_widget:         !include Guition-ESP32/widgets/car_widget.yaml
-
-  devices: !include Guition-ESP32/widgets/devices.yaml
-
-
-
-  devices: !include Guition-ESP32/widgets/devices.yaml
-
-  hvac:    !include Guition-ESP32/widgets/hvac/thermostat_widget.yaml
+  devices:            !include Guition-ESP32/widgets/devices.yaml
+  hvac:               !include Guition-ESP32/widgets/hvac/thermostat_widget.yaml
   
 
 api:
