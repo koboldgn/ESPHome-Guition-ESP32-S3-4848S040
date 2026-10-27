@@ -1771,6 +1771,9 @@ switch:
           id: lights_group_page_btn
           clickable: false
       - lvgl.button.update:
+          id: car_page_btn
+          clickable: false
+      - lvgl.button.update:
           id: devices_page_btn
           clickable: false
       - lvgl.button.update:
@@ -1783,6 +1786,9 @@ switch:
           clickable: true
       - lvgl.button.update:
           id: lights_group_page_btn
+          clickable: true
+      - lvgl.button.update:
+          id: car_page_btn
           clickable: true
       - lvgl.button.update:
           id: devices_page_btn
