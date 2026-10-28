@@ -316,6 +316,7 @@
     - "\U000F0748"
     - "\U000F0381"
     - "\U000F1846"
+    - "\U000F15B5"
 
 - file: "Guition-ESP32/fonts/mdi.ttf"
   id: mdi_72
