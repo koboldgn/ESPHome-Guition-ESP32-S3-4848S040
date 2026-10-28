@@ -309,8 +309,6 @@
     - "\U000F02E3"
     - "\U000F08D0"
     - "\U000F0502"
-    - "\U000F040C"
-    - "\U000F00AC"
 
 - file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
   id: mdi_icons_90
