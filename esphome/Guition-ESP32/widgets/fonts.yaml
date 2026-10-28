@@ -194,6 +194,13 @@
     - "\U0000E947"
 
 - file: "Guition-ESP32/fonts/icons_v2.ttf"
+  id: icons_60
+  size: 60
+  bpp: 4
+  glyphs:
+    - "\U0000E946"
+
+- file: "Guition-ESP32/fonts/icons_v2.ttf"
   id: icons_72
   size: 72
   bpp: 4
