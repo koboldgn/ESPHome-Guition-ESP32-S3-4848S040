@@ -45,4 +45,5 @@ esphome/configuration.yaml
 main.yaml
 esphome/main.yaml
 
+esphome/futes_panel.yaml
 
