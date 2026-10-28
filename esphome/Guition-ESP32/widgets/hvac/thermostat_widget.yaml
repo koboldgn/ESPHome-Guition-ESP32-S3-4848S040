@@ -602,7 +602,7 @@ lvgl:
 
               - label:
                   id: thermostat_target_temperature_icon
-                  x: -197
+                  x: -220
                   y: 95
                   align: RIGHT_MID
                   text_font: icons_28
@@ -611,7 +611,7 @@ lvgl:
 
               - label:
                   id: thermostat_target_temperature_value
-                  x: -110
+                  x: -150
                   y: 95
                   align: RIGHT_MID
                   text_font: nunito_30

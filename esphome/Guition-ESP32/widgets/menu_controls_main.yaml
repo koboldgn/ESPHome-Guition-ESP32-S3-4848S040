@@ -91,11 +91,16 @@ lvgl:
                 width: 60
                 height: 60
                 radius: 10
+                pad_all: 0
                 bg_opa: TRANSP
                 shadow_opa: TRANSP
                 widgets:
                   - label:
                       align: CENTER
+                      width: 60
+                      height: 60
+                      y: -4
+                      text_align: CENTER
                       text_color: color_steel_blue
                       text_font: icons_60
                       text: "${garage}"
