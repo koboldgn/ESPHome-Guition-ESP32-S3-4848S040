@@ -602,8 +602,8 @@ lvgl:
 
               - label:
                   id: thermostat_target_temperature_icon
-                  x: -70
-                  y: 80
+                  x: -197
+                  y: 95
                   align: RIGHT_MID
                   text_font: icons_28
                   text_color: color_steel_blue
@@ -611,8 +611,8 @@ lvgl:
 
               - label:
                   id: thermostat_target_temperature_value
-                  x: -10
-                  y: 80
+                  x: -110
+                  y: 95
                   align: RIGHT_MID
                   text_font: nunito_30
                   text_color: color_steel_blue
@@ -664,6 +664,10 @@ script:
           
           auto it = id(climate_translations).find(state);
           std::string translated_state = (it != id(climate_translations).end()) ? it->second : state;
+          if (id(current_language) == 9 && translated_state == state) {
+            if (state == "heating") translated_state = "Fűtés";
+            else if (state == "idle") translated_state = "Készenlét";
+          }
           
           lv_label_set_text(id(thermostat_state_label), translated_state.c_str());
 
