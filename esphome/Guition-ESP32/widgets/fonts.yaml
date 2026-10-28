@@ -306,6 +306,11 @@
     - "\U000F0748"
     - "\U000F1A60"
     - "\U000F1846"
+    - "\U000F02E3"
+    - "\U000F08D0"
+    - "\U000F0502"
+    - "\U000F040C"
+    - "\U000F00AC"
 
 - file: "Guition-ESP32/fonts/materialdesignicons-webfont.ttf"
   id: mdi_icons_90
@@ -317,28 +322,11 @@
     - "\U000F0381"
     - "\U000F1846"
     - "\U000F15B5"
-
-- file: "Guition-ESP32/fonts/mdi.ttf"
-  id: mdi_72
-  size: 72
-  bpp: 4
-  glyphs:
     - "\U000F02E3"
-    - "\U000F08D0"
     - "\U000F0502"
     - "\U000F040C"
     - "\U000F00AC"
-
-- file: "Guition-ESP32/fonts/mdi.ttf"
-  id: mdi_90
-  size: 90
-  bpp: 4
-  glyphs:
-    - "\U000F02E3"
     - "\U000F08D0"
-    - "\U000F0502"
-    - "\U000F040C"
-    - "\U000F00AC"
 
 - file: "Guition-ESP32/fonts/fan_icons.ttf"
   id: fan_icons_72

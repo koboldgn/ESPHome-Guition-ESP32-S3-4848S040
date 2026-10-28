@@ -25,8 +25,8 @@
 # light_icon_N    : the glyph character (unicode escape) shown on the tile
 # light_icon_font_N: the ESPHome font id that contains that glyph
 #   icons_72_ref  – 72px icons from icons_v2.ttf (default for lights)
-#   mdi_72_ref    – 72px icons from mdi.ttf (default for bed/heart/tv)
-#   icons_90 / mdi_90 – 90px variants (used by fans, covers, scenes)
+#   mdi_72_ref    – 72px icons from materialdesignicons-webfont.ttf
+#   icons_90 / mdi_icons_90 – 90px variants (used by fans, covers, scenes)
 # Override in main.yaml substitutions to suit each physical light.
 #
 # ── EXAMPLE main.yaml substitutions ─────────────────────────────────────────
@@ -90,7 +90,7 @@ substitutions:
   # ── Per-slot icon defaults ────────────────────────────────────────────────
   # Tile icons use 72px fonts (20% smaller than the 90px used by fans/covers).
   # icons_72_ref / mdi_72_ref are indirection substitutions defined in
-  # icon_library.yaml that resolve to "icons_72" / "mdi_72" via double-expansion.
+  # icon_library.yaml that resolve to "icons_72" / "mdi_icons_72" via double-expansion.
   # To override back to 90px for a slot, set light_icon_font_N: "ceiling_lamp_font"
   # (or any *_font name from icon_library.yaml) in main.yaml.
   light_icon_1:      "ceiling_lamp"

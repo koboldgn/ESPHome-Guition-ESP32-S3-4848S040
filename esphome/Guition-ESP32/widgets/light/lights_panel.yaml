@@ -58,11 +58,11 @@ substitutions:
   light_icon_3:      ""
   light_icon_font_3: "icons_90"
   light_icon_4:      "󰋣"
-  light_icon_font_4: "mdi_90"
+  light_icon_font_4: "mdi_icons_90"
   light_icon_5:      "󰗶"
-  light_icon_font_5: "mdi_90"
+  light_icon_font_5: "mdi_icons_90"
   light_icon_6:      "󰟴"
-  light_icon_font_6: "mdi_90"
+  light_icon_font_6: "mdi_icons_90"
 
   lights_page_title: "Lights"
 

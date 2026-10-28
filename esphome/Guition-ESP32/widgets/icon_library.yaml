@@ -45,13 +45,13 @@ substitutions:
   movie:                     "\U000F0381"    # mdi:movie
   movie_font:                "mdi_icons_90"
 
-  # ── mdi.ttf  (font id: mdi_90) ───────────────────────────────────────────
+  # ── materialdesignicons-webfont.ttf ──────────────────────────────────────
   bed:                       "\U000F02E3"
-  bed_font:                  "mdi_90"
+  bed_font:                  "mdi_icons_90"
   heart:                     "\U000F08D0"    # mdi:heart
-  heart_font:                "mdi_90"
+  heart_font:                "mdi_icons_90"
   tv:                        "\U000F0502"    # mdi:television
-  tv_font:                   "mdi_90"
+  tv_font:                   "mdi_icons_90"
 
   # ── materialdesignicons-webfont.ttf (font id: mdi_icons_60) — fan icons ──
   ceiling_fan:               "\U000F1797"    # mdi:ceiling-fan
@@ -61,13 +61,13 @@ substitutions:
   car:                        "\U000F15B5"    # mdi:car-electric
   car_font:                   "mdi_icons_90"
 
-  # ── mdi.ttf  (font id: mdi_90) — extra nav-icon options ──────────────────
+  # ── materialdesignicons-webfont.ttf — extra nav-icon options ─────────────
   play_circle:               "\U000F040C"    # mdi:play-circle
-  play_circle_font:          "mdi_90"
+  play_circle_font:          "mdi_icons_90"
   blinds:                    "\U000F00AC"    # mdi:blinds
-  blinds_font:               "mdi_90"
+  blinds_font:               "mdi_icons_90"
 
   # ── 72px font references — used by lights_config.yaml for smaller tile icons ─
   # Double-expansion resolves: ${${light_icon_font_N}} → ${icons_72_ref} → "icons_72"
   icons_72_ref:              "icons_72"
-  mdi_72_ref:                "mdi_72"
+  mdi_72_ref:                "mdi_icons_72"
