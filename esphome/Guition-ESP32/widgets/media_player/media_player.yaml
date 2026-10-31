@@ -1,7 +1,7 @@
 substitutions:
   # ── Saját entitás és HA szerver IP címe ─────────────────────────────────────
-  media_player_entity: "media_player.cleopatra"
-  ha_server: "http://192.168.0.22:8123"  # Cseréld ki a Home Assistantod pontos IP címére!
+  #media_player_entity: "media_player.cleopatra"
+  #ha_server: "http://192.168.0.22:8123"  # Cseréld ki a Home Assistantod pontos IP címére!
 
 
   power_icon:        "\U0000e909"
