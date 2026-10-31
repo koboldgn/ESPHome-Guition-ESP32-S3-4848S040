@@ -94,13 +94,11 @@ lvgl:
                 pad_all: 0
                 bg_opa: TRANSP
                 shadow_opa: TRANSP
-                layout:
-                  type: FLEX
-                  flex_flow: ROW
-                  flex_align_main: CENTER
-                  flex_align_cross: CENTER
                 widgets:
                   - label:
+                      align: CENTER
+                      x: 20
+                      y: -20
                       text_color: color_steel_blue
                       text_font: icons_70
                       text: "${garage}"
